@@ -23089,6 +23089,11 @@ body {
 
     document.addEventListener('DOMContentLoaded', function() {
       document.body.classList.add('auth-locked');
+      if (window.TG_PARALLEL_APP) {
+        // TG_PARALLEL_INSTANT_SHELL
+        document.body.classList.remove('auth-locked', 'auth-login-visible');
+        releaseSplashAfterAuthentication_();
+      }
       hydratePageScrollPositions_();
       ensureStickyControlHeader_();
       initializeTabAccessibility_();
