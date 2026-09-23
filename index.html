@@ -6,8 +6,8 @@
   <meta name="theme-color" content="#070b12">
   <title>TG INDEX Parallel</title>
   <link rel="icon" href="/tg-index-webapp/tg-index-header-transparent.webp">
-  <script type="module" crossorigin src="/tg-index-webapp/assets/index-DGBRp9Gp.js"></script>
-  <link rel="stylesheet" crossorigin href="/tg-index-webapp/assets/index-T9_aszN4.css">
+  <script type="module" crossorigin src="/tg-index-webapp/assets/index-Q-VH5L7a.js"></script>
+  <link rel="stylesheet" crossorigin href="/tg-index-webapp/assets/index-Cf7pt6nO.css">
 </head>
 <body>
   <div id="auth-gate" class="auth-gate" hidden>
@@ -37,12 +37,17 @@
         </div>
         <div id="liquidity-status" class="status-line" role="status">데이터를 불러오고 있습니다.</div>
         <div class="metrics-grid">
-          <article class="metric"><span>지급준비금</span><strong id="liquidity-reserve">-</strong></article>
-          <article class="metric"><span>RRP</span><strong id="liquidity-rrp">-</strong></article>
-          <article class="metric"><span>TGA</span><strong id="liquidity-tga">-</strong></article>
-          <article class="metric"><span>SOFR-IORB</span><strong id="liquidity-sofrIorb">-</strong></article>
-          <article class="metric"><span>VIX</span><strong id="liquidity-vix">-</strong></article>
-          <article class="metric"><span>MOVE</span><strong id="liquidity-move">-</strong></article>
+          <article class="metric"><span>지급준비금</span><strong id="liquidity-reserve">-</strong><small id="liquidity-reserve-meta">-</small></article>
+          <article class="metric"><span>RRP</span><strong id="liquidity-rrp">-</strong><small id="liquidity-rrp-meta">-</small></article>
+          <article class="metric"><span>TGA</span><strong id="liquidity-tga">-</strong><small id="liquidity-tga-meta">-</small></article>
+          <article class="metric"><span>SOFR-IORB</span><strong id="liquidity-sofrIorb">-</strong><small id="liquidity-sofrIorb-meta">-</small></article>
+          <article class="metric"><span>VIX</span><strong id="liquidity-vix">-</strong><small id="liquidity-vix-meta">-</small></article>
+          <article class="metric"><span>MOVE</span><strong id="liquidity-move">-</strong><small id="liquidity-move-meta">-</small></article>
+          <article class="metric"><span>HY OAS</span><strong id="liquidity-hySpreadPct">-</strong><small id="liquidity-hySpreadPct-meta">-</small></article>
+          <article class="metric"><span>HY OAS 20D MA</span><strong id="liquidity-hy20dMa">-</strong><small id="liquidity-hy20dMa-meta">-</small></article>
+          <article class="metric"><span>HY OAS 60D MA</span><strong id="liquidity-hy60dMa">-</strong><small id="liquidity-hy60dMa-meta">-</small></article>
+          <article class="metric"><span>Loan Default Rate TTM</span><strong id="liquidity-loanDefaultRateTtm">-</strong><small id="liquidity-loanDefaultRateTtm-meta">-</small></article>
+          <article class="metric"><span>HY Bond Default Rate TTM</span><strong id="liquidity-hyBondDefaultRateTtm">-</strong><small id="liquidity-hyBondDefaultRateTtm-meta">-</small></article>
         </div>
         <div class="range-controls" role="group" aria-label="유동성 조회 기간">
           <button type="button" class="range-btn active" data-years="1">1년</button>
