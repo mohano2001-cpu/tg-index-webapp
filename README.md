@@ -8,6 +8,7 @@
 - 정적 화면을 먼저 표시하고 두 스냅샷을 독립적으로 요청합니다. 로그인한 브라우저의 캐시를 먼저 표시할 수 있습니다.
 - 비공개 Google Sheets를 GitHub Actions가 읽어 Firestore 스냅샷으로 발행합니다. 발행은 6시간마다 예약됩니다.
 - Firebase 읽기는 승인된 Google 계정에 한정됩니다. 현재 인증 방식은 운영 앱의 접속현황 서비스와 다릅니다.
+- `public/full`은 이전 검증판의 잔존 파일이며 현재 GitHub Pages 배포 경로에 포함하지 않습니다. 기본 `parallel:build`는 Firebase 병렬 앱만 빌드합니다.
 
 ## 로컬 검증
 
