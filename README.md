@@ -1,4 +1,26 @@
-# TG INDEX Web App
+# TG INDEX 병렬 웹앱
 
-Static frontend for the TG INDEX dashboard. Dashboard data is requested from the
-authenticated TG INDEX Apps Script RPC endpoint and is not stored in this repository.
+운영 Apps Script 앱과 분리된 속도·정합성 검증용 앱입니다. 운영 앱의 인증, 스타일, 데이터 경로는 변경하지 않습니다.
+
+## 현재 범위
+
+- 운영 앱에서 삭제된 `시황`은 포함하지 않습니다. 첫 탭은 `유동성·신용`, 두 번째는 `물가·금리`입니다.
+- 정적 화면을 먼저 표시하고 두 스냅샷을 독립적으로 요청합니다. 로그인한 브라우저의 캐시를 먼저 표시할 수 있습니다.
+- 비공개 Google Sheets를 GitHub Actions가 읽어 Firestore 스냅샷으로 발행합니다. 발행은 6시간마다 예약됩니다.
+- Firebase 읽기는 승인된 Google 계정에 한정됩니다. 현재 인증 방식은 운영 앱의 접속현황 서비스와 다릅니다.
+
+## 로컬 검증
+
+```powershell
+npm run parallel:test
+npm run parallel:firebase:build
+```
+
+## 운영 전환 전 필수 조건
+
+1. 삭제된 시황 탭을 제외한 운영 앱의 나머지 탭과 상호작용을 기능별로 이식합니다.
+2. 각 탭의 최신 날짜·행 수·마지막 값을 운영 데이터와 자동 비교합니다.
+3. 인증·승인·세션 정책을 운영 앱과 동등하게 구현하고 데스크톱 및 iPhone에서 검증합니다.
+4. 첫 방문, 재방문, 탭 전환 시간을 실측하고 두 기기에서 화면·차트·실패 복구를 확인합니다.
+
+조건이 모두 통과하기 전에는 운영 Apps Script 배포를 교체하지 않습니다.

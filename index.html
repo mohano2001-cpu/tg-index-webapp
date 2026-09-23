@@ -6,8 +6,8 @@
   <meta name="theme-color" content="#070b12">
   <title>TG INDEX Parallel</title>
   <link rel="icon" href="/tg-index-webapp/tg-index-header-transparent.webp">
-  <script type="module" crossorigin src="/tg-index-webapp/assets/index-BTrIwEEt.js"></script>
-  <link rel="stylesheet" crossorigin href="/tg-index-webapp/assets/index-CSvwHqk8.css">
+  <script type="module" crossorigin src="/tg-index-webapp/assets/index-CZieE0iR.js"></script>
+  <link rel="stylesheet" crossorigin href="/tg-index-webapp/assets/index-T9_aszN4.css">
 </head>
 <body>
   <div id="auth-gate" class="auth-gate" hidden>
@@ -25,30 +25,38 @@
     </header>
 
     <nav class="tabs" aria-label="지표 탭">
-      <button class="tab active" data-page="market">시황</button>
+      <button class="tab active" data-page="liquidity">유동성·신용</button>
       <button class="tab" data-page="inflation">물가·금리</button>
     </nav>
 
     <main>
-      <section id="page-market" class="page active" aria-labelledby="market-title">
+      <section id="page-liquidity" class="page active" aria-labelledby="liquidity-title">
         <div class="section-head">
-          <div><span class="eyebrow">MARKET BRIEF</span><h1 id="market-title">오늘의 시황</h1></div>
-          <span id="market-updated" class="date-badge">불러오는 중</span>
+          <div><span class="eyebrow">LIQUIDITY &amp; CREDIT</span><h1 id="liquidity-title">유동성·신용</h1></div>
+          <span id="liquidity-updated" class="date-badge">불러오는 중</span>
         </div>
-        <div id="market-status" class="status-line" role="status">데이터를 불러오고 있습니다.</div>
-        <div class="market-grid">
-          <article class="panel memo-panel">
-            <div class="panel-label">시황 코멘트</div>
-            <p id="market-comment" class="memo-text skeleton-line">&nbsp;</p>
-          </article>
-          <article class="panel">
-            <div class="panel-label">매수 가능</div>
-            <div id="buy-list" class="stock-list skeleton-line">&nbsp;</div>
-          </article>
-          <article class="panel">
-            <div class="panel-label">매도 종목</div>
-            <div id="sold-list" class="stock-list skeleton-line">&nbsp;</div>
-          </article>
+        <div id="liquidity-status" class="status-line" role="status">데이터를 불러오고 있습니다.</div>
+        <div class="metrics-grid">
+          <article class="metric"><span>지급준비금</span><strong id="liquidity-reserve">-</strong></article>
+          <article class="metric"><span>RRP</span><strong id="liquidity-rrp">-</strong></article>
+          <article class="metric"><span>TGA</span><strong id="liquidity-tga">-</strong></article>
+          <article class="metric"><span>SOFR-IORB</span><strong id="liquidity-sofrIorb">-</strong></article>
+          <article class="metric"><span>VIX</span><strong id="liquidity-vix">-</strong></article>
+          <article class="metric"><span>MOVE</span><strong id="liquidity-move">-</strong></article>
+        </div>
+        <div class="range-controls" role="group" aria-label="유동성 조회 기간">
+          <button type="button" class="range-btn active" data-years="1">1년</button>
+          <button type="button" class="range-btn" data-years="3">3년</button>
+          <button type="button" class="range-btn" data-years="5">5년</button>
+          <button type="button" class="range-btn" data-years="10">10년</button>
+          <button type="button" class="range-btn" data-years="all">전체</button>
+        </div>
+        <div class="chart-grid">
+          <article class="chart-panel"><div class="chart-title"><h2>지급준비금 · RRP · TGA</h2></div><div class="canvas-wrap"><canvas id="liquidity-chart"></canvas></div></article>
+          <article class="chart-panel"><div class="chart-title"><h2>SOFR - IORB 스프레드</h2></div><div class="canvas-wrap"><canvas id="spread-chart"></canvas></div></article>
+          <article class="chart-panel"><div class="chart-title"><h2>VIX vs MOVE</h2></div><div class="canvas-wrap"><canvas id="vix-move-chart"></canvas></div></article>
+          <article class="chart-panel"><div class="chart-title"><h2>미국 하이일드 스프레드</h2></div><div class="canvas-wrap"><canvas id="hy-spread-chart"></canvas></div></article>
+          <article class="chart-panel"><div class="chart-title"><h2>미국 투기등급 디폴트율</h2></div><div class="canvas-wrap"><canvas id="default-rate-chart"></canvas></div></article>
         </div>
       </section>
 
