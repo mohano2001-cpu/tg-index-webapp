@@ -6,8 +6,8 @@
   <meta name="theme-color" content="#070b12">
   <title>TG INDEX Parallel</title>
   <link rel="icon" href="/tg-index-webapp/tg-index-header-transparent.webp">
-  <script type="module" crossorigin src="/tg-index-webapp/assets/index-CODMh8M3.js"></script>
-  <link rel="stylesheet" crossorigin href="/tg-index-webapp/assets/index-BwSFWY6C.css">
+  <script type="module" crossorigin src="/tg-index-webapp/assets/index-CTkI4ftI.js"></script>
+  <link rel="stylesheet" crossorigin href="/tg-index-webapp/assets/index-Cz2ZAIlO.css">
 </head>
 <body>
   <div id="auth-gate" class="auth-gate" hidden>
@@ -29,6 +29,7 @@
       <button class="tab" data-page="macro">매크로</button>
       <button class="tab" data-page="economic">경기·산업</button>
       <button class="tab" data-page="commodity">원자재</button>
+      <button class="tab" data-page="korea">한국시장</button>
       <button class="tab" data-page="inflation">물가·금리</button>
       <button class="tab" data-page="schedule">일정</button>
     </nav>
@@ -175,6 +176,34 @@
           </div>
           <div class="chart-grid"><article class="chart-panel"><div class="chart-title"><h2>구리 가격 추이</h2></div><div class="canvas-wrap"><canvas id="copper-price-chart"></canvas></div></article><article class="chart-panel"><div class="chart-title"><h2>구리 가격 YoY</h2></div><div class="canvas-wrap"><canvas id="copper-yoy-chart"></canvas></div></article></div>
         </section>
+      </section>
+
+      <section id="page-korea" class="page" aria-labelledby="korea-title">
+        <div class="section-head"><div><span class="eyebrow">KOREA MARKET</span><h1 id="korea-title">한국시장</h1></div><span id="korea-updated" class="date-badge">불러오는 중</span></div>
+        <div id="korea-status" class="status-line" role="status">데이터를 불러오고 있습니다.</div>
+        <div class="metrics-grid">
+          <article class="metric"><span>코스피 12Fwd PER</span><strong id="korea-per">-</strong><small id="korea-per-meta">-</small></article>
+          <article class="metric"><span>외국인 10일 강도</span><strong id="korea-foreign10d">-</strong><small id="korea-foreign10d-meta">-</small></article>
+          <article class="metric"><span>회전율</span><strong id="korea-turnover">-</strong><small id="korea-turnover-meta">-</small></article>
+          <article class="metric"><span>반대매매비중</span><strong id="korea-forcedLiquidation">-</strong><small id="korea-forcedLiquidation-meta">-</small></article>
+          <article class="metric"><span>PCR 5MA</span><strong id="korea-pcr5ma">-</strong><small id="korea-pcr5ma-meta">-</small></article>
+          <article class="metric"><span>KOSPI</span><strong id="korea-kospiClose">-</strong><small id="korea-kospiClose-meta">-</small></article>
+          <article class="metric"><span>코스피 50일 이격도</span><strong id="korea-deviation50">-</strong><small id="korea-deviation50-meta">-</small></article>
+        </div>
+        <div class="range-controls" role="group" aria-label="한국시장 조회 기간">
+          <button type="button" class="range-btn active" data-years="1">1년</button><button type="button" class="range-btn" data-years="3">3년</button><button type="button" class="range-btn" data-years="5">5년</button><button type="button" class="range-btn" data-years="10">10년</button><button type="button" class="range-btn" data-years="all">전체</button>
+        </div>
+        <div class="chart-grid">
+          <article class="chart-panel"><div class="chart-title"><h2>코스피 12개월 선행 PER</h2></div><div class="canvas-wrap"><canvas id="korea-per-chart"></canvas></div></article>
+          <article class="chart-panel"><div class="chart-title"><h2>외국인 누적 순매수강도</h2></div><div class="canvas-wrap"><canvas id="korea-foreign-chart"></canvas></div></article>
+          <article class="chart-panel"><div class="chart-title"><h2>회전율</h2></div><div class="canvas-wrap"><canvas id="korea-turnover-chart"></canvas></div></article>
+          <article class="chart-panel"><div class="chart-title"><h2>미수금 대비 반대매매비중</h2></div><div class="canvas-wrap"><canvas id="korea-liquidation-chart"></canvas></div></article>
+          <article class="chart-panel"><div class="chart-title"><h2>코스피 50일 이격도</h2></div><div class="canvas-wrap"><canvas id="korea-ma50-chart"></canvas></div></article>
+          <article class="chart-panel"><div class="chart-title"><h2>KOSPI Put/Call Ratio 5MA</h2></div><div class="canvas-wrap"><canvas id="korea-pcr-chart"></canvas></div></article>
+          <article class="chart-panel"><div class="chart-title"><h2>코스피200 선물 베이시스</h2></div><div class="canvas-wrap"><canvas id="korea-basis-chart"></canvas></div></article>
+          <article class="chart-panel"><div class="chart-title"><h2>KOSPI ADR 20D</h2></div><div class="canvas-wrap"><canvas id="korea-kospi-adr-chart"></canvas></div></article>
+          <article class="chart-panel"><div class="chart-title"><h2>KOSDAQ ADR 20D</h2></div><div class="canvas-wrap"><canvas id="korea-kosdaq-adr-chart"></canvas></div></article>
+        </div>
       </section>
 
       <section id="page-inflation" class="page" aria-labelledby="inflation-title">
