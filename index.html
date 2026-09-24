@@ -6,8 +6,8 @@
   <meta name="theme-color" content="#070b12">
   <title>TG INDEX Parallel</title>
   <link rel="icon" href="/tg-index-webapp/tg-index-header-transparent.webp">
-  <script type="module" crossorigin src="/tg-index-webapp/assets/index-BBMZK4Nu.js"></script>
-  <link rel="stylesheet" crossorigin href="/tg-index-webapp/assets/index-DimWG8Up.css">
+  <script type="module" crossorigin src="/tg-index-webapp/assets/index-DnPjvQrv.js"></script>
+  <link rel="stylesheet" crossorigin href="/tg-index-webapp/assets/index-q76nTUEm.css">
 </head>
 <body>
   <div id="auth-gate" class="auth-gate" hidden>
@@ -28,6 +28,7 @@
       <button class="tab active" data-page="liquidity">유동성·신용</button>
       <button class="tab" data-page="macro">매크로</button>
       <button class="tab" data-page="economic">경기·산업</button>
+      <button class="tab" data-page="commodity">원자재</button>
       <button class="tab" data-page="inflation">물가·금리</button>
     </nav>
 
@@ -129,6 +130,50 @@
           <article class="chart-panel"><div class="chart-title"><h2>빅테크 CAPEX YoY</h2></div><div class="canvas-wrap"><canvas id="bigtech-capex-chart"></canvas></div></article>
           <article class="chart-panel"><div class="chart-title"><h2>빅테크 CAPEX 합산</h2></div><div class="canvas-wrap"><canvas id="bigtech-total-chart"></canvas></div></article>
         </div>
+      </section>
+
+      <section id="page-commodity" class="page" aria-labelledby="commodity-title">
+        <div class="section-head"><div><span class="eyebrow">COMMODITIES</span><h1 id="commodity-title">원자재</h1></div></div>
+        <div class="range-controls" role="group" aria-label="원자재 조회 기간">
+          <button type="button" class="range-btn active" data-years="1">1년</button>
+          <button type="button" class="range-btn" data-years="3">3년</button>
+          <button type="button" class="range-btn" data-years="5">5년</button>
+          <button type="button" class="range-btn" data-years="10">10년</button>
+          <button type="button" class="range-btn" data-years="all">전체</button>
+        </div>
+        <section class="commodity-group" aria-labelledby="lithium-title">
+          <div class="section-head"><h2 id="lithium-title">리튬</h2><span id="commodity-lithium-updated" class="date-badge">불러오는 중</span></div>
+          <div id="commodity-lithium-status" class="status-line" role="status">데이터를 불러오고 있습니다.</div>
+          <div class="metrics-grid">
+            <article class="metric"><span>리튬 가격</span><strong id="commodity-lithium-price">-</strong><small id="commodity-lithium-price-meta">-</small></article>
+            <article class="metric"><span>20D MA</span><strong id="commodity-lithium-ma20">-</strong><small id="commodity-lithium-ma20-meta">-</small></article>
+            <article class="metric"><span>60D MA</span><strong id="commodity-lithium-ma60">-</strong><small id="commodity-lithium-ma60-meta">-</small></article>
+            <article class="metric"><span>리튬 YoY</span><strong id="commodity-lithium-yoy">-</strong><small id="commodity-lithium-yoy-meta">-</small></article>
+          </div>
+          <div class="chart-grid"><article class="chart-panel"><div class="chart-title"><h2>리튬 가격 추이</h2></div><div class="canvas-wrap"><canvas id="lithium-price-chart"></canvas></div></article><article class="chart-panel"><div class="chart-title"><h2>리튬 가격 YoY</h2></div><div class="canvas-wrap"><canvas id="lithium-yoy-chart"></canvas></div></article></div>
+        </section>
+        <section class="commodity-group" aria-labelledby="gold-title">
+          <div class="section-head"><h2 id="gold-title">금</h2><span id="commodity-gold-updated" class="date-badge">불러오는 중</span></div>
+          <div id="commodity-gold-status" class="status-line" role="status">데이터를 불러오고 있습니다.</div>
+          <div class="metrics-grid">
+            <article class="metric"><span>금 가격</span><strong id="commodity-gold-price">-</strong><small id="commodity-gold-price-meta">-</small></article>
+            <article class="metric"><span>20D MA</span><strong id="commodity-gold-ma20">-</strong><small id="commodity-gold-ma20-meta">-</small></article>
+            <article class="metric"><span>60D MA</span><strong id="commodity-gold-ma60">-</strong><small id="commodity-gold-ma60-meta">-</small></article>
+            <article class="metric"><span>금 YoY</span><strong id="commodity-gold-yoy">-</strong><small id="commodity-gold-yoy-meta">-</small></article>
+          </div>
+          <div class="chart-grid"><article class="chart-panel"><div class="chart-title"><h2>금 가격 추이</h2></div><div class="canvas-wrap"><canvas id="gold-price-chart"></canvas></div></article><article class="chart-panel"><div class="chart-title"><h2>금 가격 YoY</h2></div><div class="canvas-wrap"><canvas id="gold-yoy-chart"></canvas></div></article></div>
+        </section>
+        <section class="commodity-group" aria-labelledby="copper-title">
+          <div class="section-head"><h2 id="copper-title">구리</h2><span id="commodity-copper-updated" class="date-badge">불러오는 중</span></div>
+          <div id="commodity-copper-status" class="status-line" role="status">데이터를 불러오고 있습니다.</div>
+          <div class="metrics-grid">
+            <article class="metric"><span>구리 가격</span><strong id="commodity-copper-price">-</strong><small id="commodity-copper-price-meta">-</small></article>
+            <article class="metric"><span>20D MA</span><strong id="commodity-copper-ma20">-</strong><small id="commodity-copper-ma20-meta">-</small></article>
+            <article class="metric"><span>60D MA</span><strong id="commodity-copper-ma60">-</strong><small id="commodity-copper-ma60-meta">-</small></article>
+            <article class="metric"><span>구리 YoY</span><strong id="commodity-copper-yoy">-</strong><small id="commodity-copper-yoy-meta">-</small></article>
+          </div>
+          <div class="chart-grid"><article class="chart-panel"><div class="chart-title"><h2>구리 가격 추이</h2></div><div class="canvas-wrap"><canvas id="copper-price-chart"></canvas></div></article><article class="chart-panel"><div class="chart-title"><h2>구리 가격 YoY</h2></div><div class="canvas-wrap"><canvas id="copper-yoy-chart"></canvas></div></article></div>
+        </section>
       </section>
 
       <section id="page-inflation" class="page" aria-labelledby="inflation-title">
