@@ -6,8 +6,8 @@
   <meta name="theme-color" content="#070b12">
   <title>TG INDEX Parallel</title>
   <link rel="icon" href="/tg-index-webapp/tg-index-header-transparent.webp">
-  <script type="module" crossorigin src="/tg-index-webapp/assets/index-MhWTBzDq.js"></script>
-  <link rel="stylesheet" crossorigin href="/tg-index-webapp/assets/index-q76nTUEm.css">
+  <script type="module" crossorigin src="/tg-index-webapp/assets/index-CNVt2kF5.js"></script>
+  <link rel="stylesheet" crossorigin href="/tg-index-webapp/assets/index-BwSFWY6C.css">
 </head>
 <body>
   <div id="auth-gate" class="auth-gate" hidden>
@@ -30,6 +30,7 @@
       <button class="tab" data-page="economic">경기·산업</button>
       <button class="tab" data-page="commodity">원자재</button>
       <button class="tab" data-page="inflation">물가·금리</button>
+      <button class="tab" data-page="schedule">일정</button>
     </nav>
 
     <main>
@@ -211,6 +212,25 @@
             <div class="canvas-wrap"><canvas id="rates-chart"></canvas></div>
           </article>
         </div>
+      </section>
+      <section id="page-schedule" class="page" aria-labelledby="schedule-title">
+        <div class="section-head">
+          <div><span class="eyebrow">EVENT CALENDAR</span><h1 id="schedule-title">주요일정</h1></div>
+          <span id="schedule-updated" class="date-badge">불러오는 중</span>
+        </div>
+        <div id="schedule-status" class="status-line" role="status">데이터를 불러오고 있습니다.</div>
+        <div class="schedule-toolbar">
+          <button type="button" id="schedule-prev" class="range-btn" aria-label="이전 달">‹</button>
+          <h2 id="schedule-month"></h2>
+          <button type="button" id="schedule-next" class="range-btn" aria-label="다음 달">›</button>
+        </div>
+        <div class="schedule-weekdays" aria-hidden="true"><span>일</span><span>월</span><span>화</span><span>수</span><span>목</span><span>금</span><span>토</span></div>
+        <div id="schedule-calendar" class="schedule-calendar" aria-label="월별 일정"></div>
+        <div id="schedule-agenda" class="schedule-agenda" aria-label="날짜별 일정"></div>
+        <section class="schedule-details" aria-labelledby="schedule-detail-title">
+          <div class="section-head"><div><span class="eyebrow">SELECTED DATE</span><h2 id="schedule-detail-title">선택 날짜 상세</h2></div><span id="schedule-selected-date" class="date-badge"></span></div>
+          <div id="schedule-events"></div>
+        </section>
       </section>
     </main>
   </div>
