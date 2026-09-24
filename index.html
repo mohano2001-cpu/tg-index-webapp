@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#070b12">
   <title>TG INDEX Parallel</title>
   <link rel="icon" href="/tg-index-webapp/tg-index-header-transparent.webp">
-  <script type="module" crossorigin src="/tg-index-webapp/assets/index-CTkI4ftI.js"></script>
+  <script type="module" crossorigin src="/tg-index-webapp/assets/index-9hM3LMJv.js"></script>
   <link rel="stylesheet" crossorigin href="/tg-index-webapp/assets/index-Cz2ZAIlO.css">
 </head>
 <body>
@@ -222,6 +222,8 @@
           <article class="metric"><span>10Y BEI</span><strong id="inflation-bei10y">-</strong><small id="inflation-bei10y-meta">-</small></article>
           <article class="metric"><span>10Y Term Premium</span><strong id="inflation-termPremium10y">-</strong><small id="inflation-termPremium10y-meta">-</small></article>
           <article class="metric"><span>Inflation Risk Premium</span><strong id="inflation-inflationRiskPremium10y">-</strong><small id="inflation-inflationRiskPremium10y-meta">-</small></article>
+          <article class="metric"><span>USDJPY</span><strong id="inflation-usdjpy">-</strong><small id="inflation-usdjpy-meta">-</small></article>
+          <article class="metric"><span>미·일 10Y 실질금리차</span><strong id="inflation-realRateDiff">-</strong><small id="inflation-realRateDiff-meta">-</small></article>
         </div>
         <div class="range-controls" role="group" aria-label="물가·금리 조회 기간">
           <button type="button" class="range-btn active" data-years="1">1년</button>
@@ -240,6 +242,7 @@
             <div class="chart-title"><div><h2>미국 10년 금리분해</h2><p>실질금리 / BEI / 텀프리미엄 / 인플레이션 리스크</p></div></div>
             <div class="canvas-wrap"><canvas id="rates-chart"></canvas></div>
           </article>
+          <article class="chart-panel"><div class="chart-title"><h2>USDJPY vs 미·일 10Y 실질금리차</h2></div><div class="canvas-wrap"><canvas id="usdjpy-real-rate-chart"></canvas></div></article>
         </div>
       </section>
       <section id="page-schedule" class="page" aria-labelledby="schedule-title">
