@@ -6,8 +6,8 @@
   <meta name="theme-color" content="#070b12">
   <title>TG INDEX Parallel</title>
   <link rel="icon" href="/tg-index-webapp/tg-index-header-transparent.webp">
-  <script type="module" crossorigin src="/tg-index-webapp/assets/index-s8SizO-r.js"></script>
-  <link rel="stylesheet" crossorigin href="/tg-index-webapp/assets/index-1P7Q36CE.css">
+  <script type="module" crossorigin src="/tg-index-webapp/assets/index-CAjyHouk.js"></script>
+  <link rel="stylesheet" crossorigin href="/tg-index-webapp/assets/index-BsJWxdJ6.css">
 </head>
 <body>
   <div id="auth-gate" class="auth-gate" hidden>
@@ -26,6 +26,7 @@
 
     <nav class="tabs" aria-label="지표 탭">
       <button class="tab active" data-page="liquidity">유동성·신용</button>
+      <button class="tab" data-page="macro">매크로</button>
       <button class="tab" data-page="inflation">물가·금리</button>
     </nav>
 
@@ -62,6 +63,35 @@
           <article class="chart-panel"><div class="chart-title"><h2>VIX vs MOVE</h2></div><div class="canvas-wrap"><canvas id="vix-move-chart"></canvas></div></article>
           <article class="chart-panel"><div class="chart-title"><h2>미국 하이일드 스프레드</h2></div><div class="canvas-wrap"><canvas id="hy-spread-chart"></canvas></div></article>
           <article class="chart-panel"><div class="chart-title"><h2>미국 투기등급 디폴트율</h2></div><div class="canvas-wrap"><canvas id="default-rate-chart"></canvas></div></article>
+        </div>
+      </section>
+
+      <section id="page-macro" class="page" aria-labelledby="macro-title">
+        <div class="section-head">
+          <div><span class="eyebrow">MACRO</span><h1 id="macro-title">매크로</h1></div>
+          <span id="macro-updated" class="date-badge">불러오는 중</span>
+        </div>
+        <div id="macro-status" class="status-line" role="status">데이터를 불러오고 있습니다.</div>
+        <div class="metrics-grid">
+          <article class="metric"><span>미국 민간부문 수지</span><strong id="macro-privateSectorPct">-</strong><small id="macro-privateSectorPct-meta">-</small></article>
+          <article class="metric"><span>미국 정부부문 수지</span><strong id="macro-governmentSectorPct">-</strong><small id="macro-governmentSectorPct-meta">-</small></article>
+          <article class="metric"><span>미국 해외부문 수지</span><strong id="macro-foreignSectorReversedPct">-</strong><small id="macro-foreignSectorReversedPct-meta">-</small></article>
+          <article class="metric"><span>미국 노동생산성 YoY</span><strong id="macro-productivityYoy">-</strong><small id="macro-productivityYoy-meta">-</small></article>
+          <article class="metric"><span>노동생산성 지수</span><strong id="macro-productivityIndex">-</strong><small id="macro-productivityIndex-meta">-</small></article>
+          <article class="metric"><span>Fear &amp; Greed</span><strong id="macro-fearGreed">-</strong><small id="macro-fearGreed-meta">-</small></article>
+        </div>
+        <div class="range-controls" role="group" aria-label="매크로 조회 기간">
+          <button type="button" class="range-btn active" data-years="1">1년</button>
+          <button type="button" class="range-btn" data-years="3">3년</button>
+          <button type="button" class="range-btn" data-years="5">5년</button>
+          <button type="button" class="range-btn" data-years="10">10년</button>
+          <button type="button" class="range-btn" data-years="all">전체</button>
+        </div>
+        <div class="chart-grid">
+          <article class="chart-panel"><div class="chart-title"><h2>Fear &amp; Greed Index</h2></div><div class="canvas-wrap"><canvas id="fear-greed-chart"></canvas></div></article>
+          <article class="chart-panel"><div class="chart-title"><h2>US Sectoral Balances</h2></div><div class="canvas-wrap"><canvas id="sectoral-balance-chart"></canvas></div></article>
+          <article class="chart-panel"><div class="chart-title"><h2>미국 노동생산성</h2></div><div class="canvas-wrap"><canvas id="labor-productivity-chart"></canvas></div></article>
+          <article class="chart-panel"><div class="chart-title"><h2>미국 비농업 고용건수: 가계조사 vs 기업조사</h2></div><div class="canvas-wrap"><canvas id="employment-survey-chart"></canvas></div></article>
         </div>
       </section>
 
