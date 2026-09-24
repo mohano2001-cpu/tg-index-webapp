@@ -6,8 +6,8 @@
   <meta name="theme-color" content="#070b12">
   <title>TG INDEX Parallel</title>
   <link rel="icon" href="/tg-index-webapp/tg-index-header-transparent.webp">
-  <script type="module" crossorigin src="/tg-index-webapp/assets/index-NucR8gyL.js"></script>
-  <link rel="stylesheet" crossorigin href="/tg-index-webapp/assets/index-CzrvjHj4.css">
+  <script type="module" crossorigin src="/tg-index-webapp/assets/index-DqYCbykO.js"></script>
+  <link rel="stylesheet" crossorigin href="/tg-index-webapp/assets/index-CM8sGD80.css">
 </head>
 <body>
   <div id="auth-gate" class="auth-gate" hidden>
@@ -33,6 +33,7 @@
       <button class="tab" data-page="inflation">물가·금리</button>
       <button class="tab" data-page="schedule">일정</button>
       <button class="tab" data-page="report">리포트</button>
+      <button class="tab" data-page="blog">블로그</button>
     </nav>
 
     <main>
@@ -275,6 +276,17 @@
         <div id="report-count" class="report-count"></div>
         <div id="report-list" class="report-list"></div>
         <button id="report-more" class="report-more" type="button" hidden>더보기</button>
+      </section>
+      <section id="page-blog" class="page" aria-labelledby="blog-title">
+        <div class="section-head"><div><span class="eyebrow">FOLLOWED INSIGHTS</span><h1 id="blog-title">팔로우 블로그</h1></div><span id="blog-updated" class="date-badge">불러오는 중</span></div>
+        <div id="blog-status" class="status-line" role="status">데이터를 불러오고 있습니다.</div>
+        <div class="report-toolbar">
+          <div id="blog-filters" class="report-filters" role="group" aria-label="블로거 필터"></div>
+          <input id="blog-search" class="report-search" type="search" placeholder="블로거, 제목, 내용 검색" aria-label="블로그 검색">
+        </div>
+        <div id="blog-count" class="report-count"></div>
+        <div id="blog-list" class="blog-list"></div>
+        <button id="blog-more" class="report-more" type="button" hidden>더보기</button>
       </section>
     </main>
   </div>
