@@ -6,8 +6,8 @@
   <meta name="theme-color" content="#070b12">
   <title>TG INDEX Parallel</title>
   <link rel="icon" href="/tg-index-webapp/tg-index-header-transparent.webp">
-  <script type="module" crossorigin src="/tg-index-webapp/assets/index-9hM3LMJv.js"></script>
-  <link rel="stylesheet" crossorigin href="/tg-index-webapp/assets/index-Cz2ZAIlO.css">
+  <script type="module" crossorigin src="/tg-index-webapp/assets/index-NucR8gyL.js"></script>
+  <link rel="stylesheet" crossorigin href="/tg-index-webapp/assets/index-CzrvjHj4.css">
 </head>
 <body>
   <div id="auth-gate" class="auth-gate" hidden>
@@ -32,6 +32,7 @@
       <button class="tab" data-page="korea">한국시장</button>
       <button class="tab" data-page="inflation">물가·금리</button>
       <button class="tab" data-page="schedule">일정</button>
+      <button class="tab" data-page="report">리포트</button>
     </nav>
 
     <main>
@@ -263,6 +264,17 @@
           <div class="section-head"><div><span class="eyebrow">SELECTED DATE</span><h2 id="schedule-detail-title">선택 날짜 상세</h2></div><span id="schedule-selected-date" class="date-badge"></span></div>
           <div id="schedule-events"></div>
         </section>
+      </section>
+      <section id="page-report" class="page" aria-labelledby="report-title">
+        <div class="section-head"><div><span class="eyebrow">REPORT LIBRARY</span><h1 id="report-title">관심종목 리포트</h1></div><span id="report-updated" class="date-badge">불러오는 중</span></div>
+        <div id="report-status" class="status-line" role="status">데이터를 불러오고 있습니다.</div>
+        <div class="report-toolbar">
+          <div id="report-filters" class="report-filters" role="group" aria-label="종목 필터"></div>
+          <input id="report-search" class="report-search" type="search" placeholder="종목명, 제목, 증권사, 키워드 검색" aria-label="리포트 검색">
+        </div>
+        <div id="report-count" class="report-count"></div>
+        <div id="report-list" class="report-list"></div>
+        <button id="report-more" class="report-more" type="button" hidden>더보기</button>
       </section>
     </main>
   </div>
