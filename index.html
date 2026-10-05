@@ -6,8 +6,8 @@
   <meta name="theme-color" content="#070b12">
   <title>TG INDEX Parallel</title>
   <link rel="icon" href="/tg-index-webapp/tg-index-header-transparent.webp">
-  <script type="module" crossorigin src="/tg-index-webapp/assets/index-yMF8M_fx.js"></script>
-  <link rel="stylesheet" crossorigin href="/tg-index-webapp/assets/index-Dvgw9PaV.css">
+  <script type="module" crossorigin src="/tg-index-webapp/assets/index-CBb6jmLv.js"></script>
+  <link rel="stylesheet" crossorigin href="/tg-index-webapp/assets/index-D1ELvE1A.css">
 </head>
 <body>
   <div id="auth-gate" class="auth-gate" hidden>
@@ -35,6 +35,7 @@
       <button class="tab" data-page="schedule">일정</button>
       <button class="tab" data-page="report">리포트</button>
       <button class="tab" data-page="blog">블로그</button>
+      <button class="tab" data-page="fg">F&amp;G Oscillator</button>
     </nav>
 
     <main>
@@ -309,6 +310,23 @@
         <div id="blog-count" class="report-count"></div>
         <div id="blog-list" class="blog-list"></div>
         <button id="blog-more" class="report-more" type="button" hidden>더보기</button>
+      </section>
+      <section id="page-fg" class="page" aria-labelledby="fg-title">
+        <div class="section-head"><div><span class="eyebrow">FEAR &amp; GREED</span><h1 id="fg-title">F&amp;G Oscillator</h1></div></div>
+        <div class="range-controls" role="group" aria-label="F&G Oscillator 조회 기간">
+          <button type="button" class="range-btn" data-fg-days="183">6개월</button>
+          <button type="button" class="range-btn" data-fg-days="365">1년</button>
+          <button type="button" class="range-btn" data-fg-days="730">2년</button>
+          <button type="button" class="range-btn" data-fg-days="1095">3년</button>
+          <button type="button" class="range-btn" data-fg-days="1825">5년</button>
+          <button type="button" class="range-btn active" data-fg-days="all">전체</button>
+        </div>
+        <div class="fg-chart-grid">
+          <article class="chart-panel"><div class="chart-title"><h2>KOSPI</h2><span id="fg-kospi-updated" class="chart-date">불러오는 중</span><p id="fg-kospi-status" role="status">데이터를 불러오고 있습니다.</p></div><div class="canvas-wrap"><canvas id="fg-kospi-chart"></canvas></div></article>
+          <article class="chart-panel"><div class="chart-title"><h2>KOSDAQ</h2><span id="fg-kosdaq-updated" class="chart-date">불러오는 중</span><p id="fg-kosdaq-status" role="status">데이터를 불러오고 있습니다.</p></div><div class="canvas-wrap"><canvas id="fg-kosdaq-chart"></canvas></div></article>
+          <article class="chart-panel"><div class="chart-title"><h2>S&amp;P 500</h2><span id="fg-spx-updated" class="chart-date">불러오는 중</span><p id="fg-spx-status" role="status">데이터를 불러오고 있습니다.</p></div><div class="canvas-wrap"><canvas id="fg-spx-chart"></canvas></div></article>
+          <article class="chart-panel"><div class="chart-title"><h2>NASDAQ</h2><span id="fg-nasdaq-updated" class="chart-date">불러오는 중</span><p id="fg-nasdaq-status" role="status">데이터를 불러오고 있습니다.</p></div><div class="canvas-wrap"><canvas id="fg-nasdaq-chart"></canvas></div></article>
+        </div>
       </section>
     </main>
   </div>
