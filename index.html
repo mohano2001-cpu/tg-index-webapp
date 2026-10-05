@@ -6,8 +6,8 @@
   <meta name="theme-color" content="#070b12">
   <title>TG INDEX Parallel</title>
   <link rel="icon" href="/tg-index-webapp/tg-index-header-transparent.webp">
-  <script type="module" crossorigin src="/tg-index-webapp/assets/index-DqYCbykO.js"></script>
-  <link rel="stylesheet" crossorigin href="/tg-index-webapp/assets/index-CM8sGD80.css">
+  <script type="module" crossorigin src="/tg-index-webapp/assets/index-EI2Ryt3K.js"></script>
+  <link rel="stylesheet" crossorigin href="/tg-index-webapp/assets/index-Dvgw9PaV.css">
 </head>
 <body>
   <div id="auth-gate" class="auth-gate" hidden>
@@ -28,6 +28,7 @@
       <button class="tab active" data-page="liquidity">유동성·신용</button>
       <button class="tab" data-page="macro">매크로</button>
       <button class="tab" data-page="economic">경기·산업</button>
+      <button class="tab" data-page="export">수출데이터</button>
       <button class="tab" data-page="commodity">원자재</button>
       <button class="tab" data-page="korea">한국시장</button>
       <button class="tab" data-page="inflation">물가·금리</button>
@@ -208,6 +209,19 @@
         </div>
       </section>
 
+      <section id="page-export" class="page" aria-labelledby="export-title">
+        <div class="section-head"><div><span class="eyebrow">EXPORT DATA</span><h1 id="export-title">수출데이터</h1></div><span id="export-updated" class="date-badge">불러오는 중</span></div>
+        <div id="export-status" class="status-line" role="status">데이터를 불러오고 있습니다.</div>
+        <div class="report-toolbar">
+          <div id="export-filters" class="report-filters" aria-label="수출 건강도 필터"></div>
+          <input id="export-search" class="report-search" type="search" placeholder="품목·기업 검색" aria-label="수출 품목 또는 기업 검색">
+        </div>
+        <div id="export-count" class="report-count"></div>
+        <section id="export-detail" class="export-detail" aria-live="polite" hidden></section>
+        <div id="export-list" class="export-list"></div>
+        <button id="export-more" class="report-more" type="button" hidden>더보기</button>
+      </section>
+
       <section id="page-inflation" class="page" aria-labelledby="inflation-title">
         <div class="section-head">
           <div><span class="eyebrow">INFLATION &amp; RATES</span><h1 id="inflation-title">물가·금리</h1></div>
@@ -227,6 +241,14 @@
           <article class="metric"><span>USDJPY</span><strong id="inflation-usdjpy">-</strong><small id="inflation-usdjpy-meta">-</small></article>
           <article class="metric"><span>미·일 10Y 실질금리차</span><strong id="inflation-realRateDiff">-</strong><small id="inflation-realRateDiff-meta">-</small></article>
         </div>
+        <section class="fedwatch-panel" aria-labelledby="fedwatch-title">
+          <div class="section-head"><div><span class="eyebrow">CME FEDWATCH · CURRENT</span><h2 id="fedwatch-title">연준 목표금리 확률</h2></div><span id="fedwatch-updated" class="date-badge">불러오는 중</span></div>
+          <div id="fedwatch-status" class="status-line" role="status">데이터를 불러오고 있습니다.</div>
+          <div id="fedwatch-meta" class="fedwatch-meta"></div>
+          <div id="fedwatch-summary" class="fedwatch-summary"></div>
+          <div class="fedwatch-scroll"><table class="fedwatch-table"><thead id="fedwatch-head"></thead><tbody id="fedwatch-body"></tbody></table></div>
+          <a class="fedwatch-source" href="https://www.cmegroup.com/ko/markets/interest-rates/cme-fedwatch-tool.html" target="_blank" rel="noopener noreferrer">출처: CME FedWatch</a>
+        </section>
         <div class="range-controls" role="group" aria-label="물가·금리 조회 기간">
           <button type="button" class="range-btn active" data-years="1">1년</button>
           <button type="button" class="range-btn" data-years="3">3년</button>
