@@ -6,8 +6,8 @@
   <meta name="theme-color" content="#070b12">
   <title>TG INDEX Parallel</title>
   <link rel="icon" href="/tg-index-webapp/tg-index-header-transparent.webp">
-  <script type="module" crossorigin src="/tg-index-webapp/assets/index-CBb6jmLv.js"></script>
-  <link rel="stylesheet" crossorigin href="/tg-index-webapp/assets/index-D1ELvE1A.css">
+  <script type="module" crossorigin src="/tg-index-webapp/assets/index-COJlUFj5.js"></script>
+  <link rel="stylesheet" crossorigin href="/tg-index-webapp/assets/index-D-CiUMUA.css">
 </head>
 <body>
   <div id="auth-gate" class="auth-gate" hidden>
@@ -35,6 +35,7 @@
       <button class="tab" data-page="schedule">일정</button>
       <button class="tab" data-page="report">리포트</button>
       <button class="tab" data-page="blog">블로그</button>
+      <button class="tab" data-page="indicator">지표개발</button>
       <button class="tab" data-page="fg">F&amp;G Oscillator</button>
     </nav>
 
@@ -327,6 +328,24 @@
           <article class="chart-panel"><div class="chart-title"><h2>S&amp;P 500</h2><span id="fg-spx-updated" class="chart-date">불러오는 중</span><p id="fg-spx-status" role="status">데이터를 불러오고 있습니다.</p></div><div class="canvas-wrap"><canvas id="fg-spx-chart"></canvas></div></article>
           <article class="chart-panel"><div class="chart-title"><h2>NASDAQ</h2><span id="fg-nasdaq-updated" class="chart-date">불러오는 중</span><p id="fg-nasdaq-status" role="status">데이터를 불러오고 있습니다.</p></div><div class="canvas-wrap"><canvas id="fg-nasdaq-chart"></canvas></div></article>
         </div>
+      </section>
+      <section id="page-indicator" class="page" aria-labelledby="indicator-title">
+        <div class="section-head"><div><span class="eyebrow">INDICATOR LAB</span><h1 id="indicator-title">지표개발</h1></div></div>
+        <div class="range-controls" role="group" aria-label="지표개발 기간 단위">
+          <button type="button" class="range-btn active" data-indicator-period="daily">일별</button>
+          <button type="button" class="range-btn" data-indicator-period="weekly">주별</button>
+          <button type="button" class="range-btn" data-indicator-period="monthly">월별</button>
+        </div>
+        <div class="range-controls" role="group" aria-label="지표개발 조회 기간">
+          <button type="button" class="range-btn active" data-indicator-years="1">1년</button>
+          <button type="button" class="range-btn" data-indicator-years="2">2년</button>
+          <button type="button" class="range-btn" data-indicator-years="3">3년</button>
+          <button type="button" class="range-btn" data-indicator-years="5">5년</button>
+          <button type="button" class="range-btn" data-indicator-years="all">전체</button>
+        </div>
+        <div class="indicator-group"><h2>볼린저 상단돌파</h2><p class="indicator-note">현재 구성종목을 과거로 소급한 지표로 생존편향이 있습니다.</p><p id="indicator-bb-status" class="status-line" role="status">데이터를 불러오고 있습니다.</p><span id="indicator-bb-updated" class="chart-date"></span><div id="indicator-bb-grid" class="indicator-chart-grid"></div></div>
+        <div class="indicator-group"><h2>52주 신고가</h2><p class="indicator-note">현재 구성종목을 과거로 소급하며, 상장 이력이 252거래일보다 짧은 종목은 판정에서 제외합니다.</p><p id="indicator-high52-status" class="status-line" role="status">데이터를 불러오고 있습니다.</p><span id="indicator-high52-updated" class="chart-date"></span><div id="indicator-high52-grid" class="indicator-chart-grid"></div></div>
+        <div class="indicator-group"><h2>특정업종 쏠림지수</h2><div id="indicator-sector-grid" class="indicator-chart-grid"></div></div>
       </section>
     </main>
   </div>
