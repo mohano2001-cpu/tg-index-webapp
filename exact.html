@@ -3774,6 +3774,7 @@
     }
 
     function scheduleBackgroundPreload() {
+      if (window.TG_EXACT_BUILD_VERSION) return;
       if (backgroundPreloadStarted) return;
       backgroundPreloadStarted = true;
 
