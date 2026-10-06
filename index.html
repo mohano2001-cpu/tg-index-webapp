@@ -6,8 +6,8 @@
   <meta name="theme-color" content="#070b12">
   <title>TG INDEX Parallel</title>
   <link rel="icon" href="/tg-index-webapp/tg-index-header-transparent.webp">
-  <script type="module" crossorigin src="/tg-index-webapp/assets/index-D9Wf1T74.js"></script>
-  <link rel="stylesheet" crossorigin href="/tg-index-webapp/assets/index-CiQAzC-I.css">
+  <script type="module" crossorigin src="/tg-index-webapp/assets/index-DrV-FirY.js"></script>
+  <link rel="stylesheet" crossorigin href="/tg-index-webapp/assets/index-CE8V9fg1.css">
 </head>
 <body>
   <div id="auth-gate" class="auth-gate" hidden>
@@ -37,6 +37,7 @@
       <button class="tab" data-page="disclosure">주요공시</button>
       <button class="tab" data-page="blog">블로그</button>
       <button class="tab" data-page="dataCenter">데이터센터</button>
+      <button class="tab" data-page="supply">국내 수급오실레이터</button>
       <button class="tab" data-page="indicator">지표개발</button>
       <button class="tab" data-page="fg">F&amp;G Oscillator</button>
     </nav>
@@ -330,6 +331,16 @@
           <article class="chart-panel"><div class="chart-title"><h2>S&amp;P 500</h2><span id="fg-spx-updated" class="chart-date">불러오는 중</span><p id="fg-spx-status" role="status">데이터를 불러오고 있습니다.</p></div><div class="canvas-wrap"><canvas id="fg-spx-chart"></canvas></div></article>
           <article class="chart-panel"><div class="chart-title"><h2>NASDAQ</h2><span id="fg-nasdaq-updated" class="chart-date">불러오는 중</span><p id="fg-nasdaq-status" role="status">데이터를 불러오고 있습니다.</p></div><div class="canvas-wrap"><canvas id="fg-nasdaq-chart"></canvas></div></article>
         </div>
+      </section>
+      <section id="page-supply" class="page" aria-labelledby="supply-title">
+        <div class="section-head"><div><span class="eyebrow">DOMESTIC SUPPLY</span><h1 id="supply-title">국내 수급오실레이터</h1></div><span id="supply-updated" class="date-badge">불러오는 중</span></div>
+        <div id="supply-status" class="status-line" role="status">종목 목록을 불러오고 있습니다.</div>
+        <div class="supply-picker"><input id="supply-search" class="report-search" type="search" placeholder="종목명 또는 6자리 종목코드" aria-label="국내 수급 종목 검색"><div id="supply-results" class="supply-results" role="listbox" aria-label="종목 검색 결과"></div><strong id="supply-selected">-</strong></div>
+        <div class="range-controls" role="group" aria-label="국내 수급오실레이터 조회 기간"><button class="range-btn" type="button" data-supply-days="183">6개월</button><button class="range-btn active" type="button" data-supply-days="365">1년</button><button class="range-btn" type="button" data-supply-days="730">2년</button><button class="range-btn" type="button" data-supply-days="all">전체</button></div>
+        <article class="chart-panel"><div class="chart-title"><h2 id="supply-chart-title">종목을 선택해주세요</h2><p id="supply-chart-summary"></p></div><div class="canvas-wrap"><canvas id="supply-chart"></canvas></div></article>
+        <div class="supply-profiles-head"><h2>가격대별 수급 매물대</h2><div class="range-controls" role="group" aria-label="매물대 조회 기간"><button class="range-btn active" type="button" data-supply-months="6">6개월</button><button class="range-btn" type="button" data-supply-months="12">12개월</button><button class="range-btn" type="button" data-supply-months="18">18개월</button><button class="range-btn" type="button" data-supply-months="24">24개월</button></div></div>
+        <p id="supply-profile-summary" class="indicator-note"></p>
+        <div class="supply-profile-grid"><article class="chart-panel"><div class="chart-title"><h2>개인 + 금융투자</h2></div><div class="canvas-wrap"><canvas id="supply-profile-personal"></canvas></div></article><article class="chart-panel"><div class="chart-title"><h2>기관 (금융투자 제외)</h2></div><div class="canvas-wrap"><canvas id="supply-profile-institution"></canvas></div></article><article class="chart-panel"><div class="chart-title"><h2>외국인</h2></div><div class="canvas-wrap"><canvas id="supply-profile-foreign"></canvas></div></article></div>
       </section>
       <section id="page-indicator" class="page" aria-labelledby="indicator-title">
         <div class="section-head"><div><span class="eyebrow">INDICATOR LAB</span><h1 id="indicator-title">지표개발</h1></div></div>
