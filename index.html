@@ -6,8 +6,8 @@
   <meta name="theme-color" content="#070b12">
   <title>TG INDEX Parallel</title>
   <link rel="icon" href="/tg-index-webapp/tg-index-header-transparent.webp">
-  <script type="module" crossorigin src="/tg-index-webapp/assets/index-COJlUFj5.js"></script>
-  <link rel="stylesheet" crossorigin href="/tg-index-webapp/assets/index-D-CiUMUA.css">
+  <script type="module" crossorigin src="/tg-index-webapp/assets/index-D9Wf1T74.js"></script>
+  <link rel="stylesheet" crossorigin href="/tg-index-webapp/assets/index-CiQAzC-I.css">
 </head>
 <body>
   <div id="auth-gate" class="auth-gate" hidden>
@@ -34,7 +34,9 @@
       <button class="tab" data-page="inflation">물가·금리</button>
       <button class="tab" data-page="schedule">일정</button>
       <button class="tab" data-page="report">리포트</button>
+      <button class="tab" data-page="disclosure">주요공시</button>
       <button class="tab" data-page="blog">블로그</button>
+      <button class="tab" data-page="dataCenter">데이터센터</button>
       <button class="tab" data-page="indicator">지표개발</button>
       <button class="tab" data-page="fg">F&amp;G Oscillator</button>
     </nav>
@@ -346,6 +348,36 @@
         <div class="indicator-group"><h2>볼린저 상단돌파</h2><p class="indicator-note">현재 구성종목을 과거로 소급한 지표로 생존편향이 있습니다.</p><p id="indicator-bb-status" class="status-line" role="status">데이터를 불러오고 있습니다.</p><span id="indicator-bb-updated" class="chart-date"></span><div id="indicator-bb-grid" class="indicator-chart-grid"></div></div>
         <div class="indicator-group"><h2>52주 신고가</h2><p class="indicator-note">현재 구성종목을 과거로 소급하며, 상장 이력이 252거래일보다 짧은 종목은 판정에서 제외합니다.</p><p id="indicator-high52-status" class="status-line" role="status">데이터를 불러오고 있습니다.</p><span id="indicator-high52-updated" class="chart-date"></span><div id="indicator-high52-grid" class="indicator-chart-grid"></div></div>
         <div class="indicator-group"><h2>특정업종 쏠림지수</h2><div id="indicator-sector-grid" class="indicator-chart-grid"></div></div>
+      </section>
+      <section id="page-disclosure" class="page" aria-labelledby="disclosure-title">
+        <div class="section-head"><div><span class="eyebrow">DART DISCLOSURE</span><h1 id="disclosure-title">주요공시</h1></div><span id="disclosure-updated" class="date-badge">불러오는 중</span></div>
+        <div id="disclosure-status" class="status-line" role="status">데이터를 불러오고 있습니다.</div>
+        <div id="disclosure-filters" class="report-filters" role="group" aria-label="공시 종목 필터"></div>
+        <input id="disclosure-search" class="report-search" type="search" placeholder="종목명, 공시제목, 영향분류, 키워드 검색" aria-label="주요공시 검색">
+        <div id="disclosure-count" class="report-count"></div>
+        <div id="disclosure-list" class="report-list"></div>
+        <button id="disclosure-more" class="report-more" type="button" hidden>더보기</button>
+      </section>
+      <section id="page-dataCenter" class="page" aria-labelledby="data-center-title">
+        <div class="section-head"><div><span class="eyebrow">AI INFRA CYCLE TRACKER</span><h1 id="data-center-title">AI 데이터센터 건설·증설 추적</h1></div><span id="data-center-updated" class="date-badge">불러오는 중</span></div>
+        <div id="data-center-status" class="status-line" role="status">데이터를 불러오고 있습니다.</div>
+        <div class="metrics-grid dc-metrics">
+          <article class="metric"><span>데이터센터</span><strong id="dc-sites">-</strong><small>선택 시점</small></article>
+          <article class="metric"><span>Compute</span><strong id="dc-compute">-</strong><small>H100 환산</small></article>
+          <article class="metric"><span>IT Power</span><strong id="dc-power">-</strong><small>MW</small></article>
+          <article class="metric"><span>Cost</span><strong id="dc-cost">-</strong><small>billion 2025 USD</small></article>
+          <article class="metric"><span>미래 계획 센터</span><strong id="dc-future">-</strong><small>최신 계획 기준</small></article>
+          <article class="metric"><span>위험 신호</span><strong id="dc-risk">-</strong><small>원본 신호</small></article>
+        </div>
+        <div class="range-controls" role="group" aria-label="데이터센터 순위 지표">
+          <button class="range-btn active" type="button" data-dc-metric="compute">Compute</button>
+          <button class="range-btn" type="button" data-dc-metric="powerMw">IT Power</button>
+          <button class="range-btn" type="button" data-dc-metric="costBillion">Cost</button>
+        </div>
+        <section class="chart-panel dc-panel"><div class="chart-title"><h2>데이터센터 규모 순위</h2><p>선택 시점의 센터별 규모</p></div><div id="dc-ranking" class="dc-ranking"></div><button id="dc-rank-more" class="report-more" type="button">더 보기</button><div class="dc-time"><span id="dc-start-date">-</span><input id="dc-timeline" type="range" min="0" max="0" value="0" aria-label="데이터센터 기준 시점"><strong id="dc-selected-date">-</strong></div></section>
+        <div class="indicator-chart-grid dc-secondary"><section class="chart-panel"><div class="chart-title"><h2>총 Compute 추이</h2><p>H100 환산 · 수집일 기준</p></div><div class="canvas-wrap"><canvas id="dc-trend-chart"></canvas></div></section><section class="chart-panel"><div class="chart-title"><h2>주요 변화 신호</h2></div><div id="dc-signals" class="dc-signals"></div></section></div>
+        <section class="dc-explorer"><h2>데이터센터 탐색</h2><input id="dc-search" class="report-search" type="search" placeholder="센터·소유자·국가 검색" aria-label="데이터센터 검색"><div id="dc-center-list" class="dc-center-list"></div><div id="dc-detail" class="dc-detail"></div></section>
+        <p class="indicator-note">Compute와 Cost는 Epoch의 추정치이며 실제 구매량·지출액과 다를 수 있습니다. 원본은 비정기적으로 갱신됩니다. <a href="https://epoch.ai/data/ai-data-centers" target="_blank" rel="noopener noreferrer">출처: Epoch AI Data Centers</a></p>
       </section>
     </main>
   </div>
