@@ -20503,7 +20503,7 @@ body {
   white-space: nowrap !important;
 }
 </style>
-</head><body><div class="app"><p>체슬리QR 화면 표시값 · 반올림 · 운영 배포 전 검토</p>    <main id="page-optionPayoff" class="page active">
+</head><body><div class="app"><p>옵션 만기손익 · 검토 화면</p>    <main id="page-optionPayoff" class="page active">
       <div class="chart-header">
         <div><h2>외국인 옵션 만기손익 추정</h2><p id="optionPayoffExpiry">-</p></div>
         <span id="optionPayoffUpdated" class="chart-update-date">최신 업데이트: -</span>
@@ -20516,7 +20516,6 @@ body {
         <div class="option-payoff-table-wrap"><table class="option-payoff-table"><thead><tr><th>행사가</th><th>지수환산</th></tr></thead><tbody id="optionPayoffConversion"></tbody></table></div>
       </div>
       <section class="chart-card"><div class="chart-header"><h2>최근 5거래일 만기손익 비교</h2></div><canvas id="optionPayoffHistoryChart"></canvas></section>
-      <p class="option-payoff-source">출처: <a href="https://www.chesleyqr.com/premium/" target="_blank" rel="noopener">체슬리QR</a> · 만기손익 추정치 · 화면 표시값(반올림) · 단위: 억 원</p>
     </main>
 
 </div><script>/*!
@@ -20639,6 +20638,28 @@ let currentPage='optionPayoff';    let optionPayoffData_ = null;
       return row ? row.kospi.toLocaleString('ko-KR', { maximumFractionDigits: 2 }) : '';
     }
 
+    const optionPayoffGuides_ = {
+      id: 'optionPayoffGuides',
+      beforeDatasetsDraw: function(chart, args, options) {
+        const area = chart.chartArea;
+        if (!area) return;
+        const ctx = chart.ctx;
+        const zero = chart.scales.y.getPixelForValue(0);
+        const current = chart.scales.x.getPixelForValue(options.currentPrice);
+        ctx.save();
+        ctx.beginPath(); ctx.rect(area.left, area.top, area.right - area.left, area.bottom - area.top); ctx.clip();
+        if (zero >= area.top && zero <= area.bottom) {
+          ctx.strokeStyle = '#8e99a9'; ctx.lineWidth = 1.25;
+          ctx.beginPath(); ctx.moveTo(area.left, zero); ctx.lineTo(area.right, zero); ctx.stroke();
+        }
+        if (Number.isFinite(current) && current >= area.left && current <= area.right) {
+          ctx.strokeStyle = '#facc15'; ctx.lineWidth = 1.5;
+          ctx.beginPath(); ctx.moveTo(current, area.top); ctx.lineTo(current, area.bottom); ctx.stroke();
+        }
+        ctx.restore();
+      }
+    };
+
     function renderOptionPayoff_() {
       if (!optionPayoffData_) return;
       const date = document.getElementById('optionPayoffDate').value;
@@ -20666,19 +20687,19 @@ let currentPage='optionPayoff';    let optionPayoffData_ = null;
         }; });
         const options = { responsive: true, maintainAspectRatio: false, animation: false,
           interaction: { mode: 'nearest', intersect: false },
-          plugins: { tooltip: { callbacks: {
+          plugins: { optionPayoffGuides: { currentPrice: day.futuresPrice }, tooltip: { callbacks: {
             title: function(items) { const item = items[0]; const row = series[item.datasetIndex]; const converted = optionPayoffIndex_(row, item.parsed.x); return item.parsed.x + (converted ? ' (' + converted + ')' : ''); },
             label: function(item) { return item.dataset.label + ': ' + item.parsed.y.toLocaleString('ko-KR', { maximumFractionDigits: 2 }) + '억 원'; }
           } } },
           scales: { x: { type: 'linear', title: { display: true, text: '행사가 (제공된 KOSPI 지수환산)' }, ticks: { callback: function(value) { const converted = optionPayoffIndex_(day, value); return value + (converted ? ' (' + converted + ')' : ''); } } },
-            y: { title: { display: true, text: '만기손익 (억 원)' } } }
+            y: { suggestedMin: 0, suggestedMax: 0, title: { display: true, text: '만기손익 (억 원)' } } }
         };
         if (optionPayoffCharts_[id]) {
           optionPayoffCharts_[id].data.datasets = datasets;
           optionPayoffCharts_[id].options = options;
           applyExportChartStyle_(optionPayoffCharts_[id].options);
           optionPayoffCharts_[id].update('none');
-        } else optionPayoffCharts_[id] = new Chart(document.getElementById(id), { type: 'line', data: { datasets: datasets }, options: options });
+        } else optionPayoffCharts_[id] = new Chart(document.getElementById(id), { type: 'line', data: { datasets: datasets }, options: options, plugins: [optionPayoffGuides_] });
       }
       draw('optionPayoffChart', [day], ['#ff245b']);
       draw('optionPayoffHistoryChart', recent, colors);
