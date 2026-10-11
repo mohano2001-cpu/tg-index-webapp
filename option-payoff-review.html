@@ -20512,16 +20512,15 @@ body {
 </head><body><div class="app"><p>옵션 만기손익 · 검토 화면</p>    <main id="page-optionPayoff" class="page active">
       <div class="chart-header option-payoff-heading">
         <div><h2>외국인 옵션 만기손익 추정</h2><p id="optionPayoffExpiry">-</p></div>
-        <span id="optionPayoffUpdated" class="chart-update-date">최신 업데이트: -</span>
       </div>
       <div class="option-payoff-toolbar"><label for="optionPayoffDate">기준일</label>
       <select id="optionPayoffDate" onchange="renderOptionPayoff_()" disabled></select></div>
       <p id="optionPayoffStatus" role="status">데이터 연결 전입니다.</p>
       <div class="option-payoff-layout">
-        <section class="chart-card"><div class="chart-header"><h2 id="optionPayoffTitle">선택일 만기손익</h2></div><canvas id="optionPayoffChart"></canvas></section>
+        <section class="chart-card"><div class="chart-header"><div><h2 id="optionPayoffTitle">선택일 만기손익</h2><span id="optionPayoffUpdated" class="chart-update-date needs-check">최신 업데이트: 확인 필요</span></div></div><canvas id="optionPayoffChart"></canvas></section>
         <div class="option-payoff-table-wrap"><table class="option-payoff-table"><thead><tr><th>행사가</th><th>지수환산</th></tr></thead><tbody id="optionPayoffConversion"></tbody></table></div>
       </div>
-      <section class="chart-card"><div class="chart-header"><h2>최근 5거래일 만기손익 비교</h2></div><canvas id="optionPayoffHistoryChart"></canvas></section>
+      <section class="chart-card"><div class="chart-header"><div><h2>최근 5거래일 만기손익 비교</h2></div></div><canvas id="optionPayoffHistoryChart"></canvas></section>
     </main>
 
 </div><script>/*!
@@ -20601,7 +20600,55 @@ body {
       Chart.defaults.font.weight = '600';
     }
 
-let currentPage='optionPayoff';    let optionPayoffData_ = null;
+let currentPage='optionPayoff';    function isRecentChartDateLabel_(label) {
+      const match = String(label || '').trim().match(/^(\d{4})[-./](\d{1,2})[-./](\d{1,2})/);
+      if (!match) return false;
+
+      const year = Number(match[1]);
+      const month = Number(match[2]);
+      const day = Number(match[3]);
+      const date = new Date(year, month - 1, day);
+      if (
+        date.getFullYear() !== year ||
+        date.getMonth() !== month - 1 ||
+        date.getDate() !== day
+      ) return false;
+
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      date.setHours(0, 0, 0, 0);
+      const dayDiff = Math.round((today.getTime() - date.getTime()) / 86400000);
+      return dayDiff === 0 || dayDiff === 1;
+    }
+
+    function setChartUpdateDate_(canvasId, label) {
+      try {
+        const canvas = document.getElementById(canvasId);
+        if (!canvas) return;
+
+        const card = canvas.closest('.chart-card');
+        if (!card) return;
+
+        const headerText = card.querySelector('.chart-header > div');
+        if (!headerText) return;
+
+        let badge = headerText.querySelector('.chart-update-date');
+        if (!badge) {
+          badge = document.createElement('div');
+          badge.className = 'chart-update-date';
+          headerText.appendChild(badge);
+        }
+
+        const normalizedLabel = String(label || '').trim();
+        badge.textContent = '최신 업데이트: ' + (normalizedLabel || '확인 필요');
+        badge.classList.toggle('needs-check', !normalizedLabel);
+        badge.classList.toggle('is-recent', !!normalizedLabel && isRecentChartDateLabel_(normalizedLabel));
+      } catch (err) {
+        console.log('chart update date error', canvasId, err);
+      }
+    }
+
+    let optionPayoffData_ = null;
     let optionPayoffLoading_ = false;
     const optionPayoffCharts_ = {};
 
@@ -20623,7 +20670,6 @@ let currentPage='optionPayoff';    let optionPayoffData_ = null;
         });
         if (data.days.some(function(day) { return day.date === previous; })) select.value = previous;
         select.disabled = false;
-        document.getElementById('optionPayoffUpdated').textContent = '최신 업데이트: ' + data.updatedAt;
         if (currentPage === 'optionPayoff') renderOptionPayoff_();
       }).withFailureHandler(function() { optionPayoffLoading_ = false; optionPayoffError_(); }).getOptionPayoffData();
     }
@@ -20691,6 +20737,9 @@ let currentPage='optionPayoff';    let optionPayoffData_ = null;
       const date = document.getElementById('optionPayoffDate').value;
       const day = optionPayoffData_.days.find(function(row) { return row.date === date; });
       if (!day) return;
+      const latestDate = optionPayoffData_.days[optionPayoffData_.days.length - 1].date;
+      setChartUpdateDate_('optionPayoffChart', latestDate);
+      setChartUpdateDate_('optionPayoffHistoryChart', latestDate);
       document.getElementById('optionPayoffStatus').textContent = '';
       document.getElementById('optionPayoffExpiry').textContent = '옵션 만기일: ' + day.expiry + ' · 선물 기준가: ' + day.futuresPrice.toLocaleString('ko-KR', { maximumFractionDigits: 2 });
       document.getElementById('optionPayoffTitle').textContent = date + ' 기준 만기손익';
@@ -20755,7 +20804,6 @@ function decodeSnapshotField(value){
  const select=document.getElementById('optionPayoffDate');
  optionPayoffData_.days.slice().reverse().forEach(day=>{const option=document.createElement('option');option.value=day.date;option.textContent=day.date;select.appendChild(option)});
  select.disabled=false;
- document.getElementById('optionPayoffUpdated').textContent='최신 업데이트: '+optionPayoffData_.meta.updatedAt;
  renderOptionPayoff_();
 }catch(error){document.getElementById('optionPayoffStatus').textContent=error.message;}})();
 </script></body></html>
