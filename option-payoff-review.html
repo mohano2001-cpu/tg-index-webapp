@@ -8306,6 +8306,12 @@ body.dc-table-modal-open { overflow: hidden !important; overscroll-behavior: non
 }
 </style>
 <style id="tg-option-payoff-layout-v1">
+#page-optionPayoff .option-payoff-heading { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; padding: 16px 0 12px; }
+#page-optionPayoff .option-payoff-heading h2 { margin: 0; font-size: 18px; }
+#page-optionPayoff .option-payoff-heading p { margin: 6px 0 0; color: #a9bfd5; font-size: 12px; }
+#page-optionPayoff .option-payoff-toolbar { display: flex; align-items: center; gap: 10px; border-top: 1px solid rgba(148,163,184,.12); border-bottom: 1px solid rgba(148,163,184,.12); margin-bottom: 16px; }
+#page-optionPayoff .option-payoff-toolbar label { color: #cbd5e1; font-size: 12px; font-weight: 700; }
+#optionPayoffStatus:empty { display: none; }
 #page-optionPayoff .option-payoff-layout { display: grid; grid-template-columns: minmax(0, 1fr) 190px; gap: 16px; align-items: start; }
 #page-optionPayoff .chart-card { min-width: 0; }
 #page-optionPayoff canvas { height: 360px; }
@@ -20504,12 +20510,12 @@ body {
 }
 </style>
 </head><body><div class="app"><p>옵션 만기손익 · 검토 화면</p>    <main id="page-optionPayoff" class="page active">
-      <div class="chart-header">
+      <div class="chart-header option-payoff-heading">
         <div><h2>외국인 옵션 만기손익 추정</h2><p id="optionPayoffExpiry">-</p></div>
         <span id="optionPayoffUpdated" class="chart-update-date">최신 업데이트: -</span>
       </div>
-      <label for="optionPayoffDate">기준일</label>
-      <select id="optionPayoffDate" onchange="renderOptionPayoff_()" disabled></select>
+      <div class="option-payoff-toolbar"><label for="optionPayoffDate">기준일</label>
+      <select id="optionPayoffDate" onchange="renderOptionPayoff_()" disabled></select></div>
       <p id="optionPayoffStatus" role="status">데이터 연결 전입니다.</p>
       <div class="option-payoff-layout">
         <section class="chart-card"><div class="chart-header"><h2 id="optionPayoffTitle">선택일 만기손익</h2></div><canvas id="optionPayoffChart"></canvas></section>
@@ -20638,6 +20644,16 @@ let currentPage='optionPayoff';    let optionPayoffData_ = null;
       return row ? row.kospi.toLocaleString('ko-KR', { maximumFractionDigits: 2 }) : '';
     }
 
+    function optionPayoffHoverIndex_(day, strike) {
+      const exact = optionPayoffIndex_(day, strike);
+      if (exact) return exact;
+      const upper = day.conversion.findIndex(function(point) { return point.strike > strike; });
+      if (upper <= 0) return '제공 범위 밖';
+      const low = day.conversion[upper - 1], high = day.conversion[upper];
+      const value = low.kospi + (high.kospi - low.kospi) * (strike - low.strike) / (high.strike - low.strike);
+      return value.toLocaleString('ko-KR', { maximumFractionDigits: 2 }) + ' (보간값)';
+    }
+
     const optionPayoffGuides_ = {
       id: 'optionPayoffGuides',
       beforeDatasetsDraw: function(chart, args, options) {
@@ -20657,6 +20673,16 @@ let currentPage='optionPayoff';    let optionPayoffData_ = null;
           ctx.beginPath(); ctx.moveTo(current, area.top); ctx.lineTo(current, area.bottom); ctx.stroke();
         }
         ctx.restore();
+      },
+      afterDatasetsDraw: function(chart) {
+        const active = chart.tooltip && chart.tooltip.getActiveElements();
+        if (!active || !active.length) return;
+        const x = active[0].element.x, area = chart.chartArea, ctx = chart.ctx;
+        if (!area || x < area.left || x > area.right) return;
+        ctx.save();
+        ctx.strokeStyle = 'rgba(203,213,225,.7)'; ctx.lineWidth = 1; ctx.setLineDash([4, 4]);
+        ctx.beginPath(); ctx.moveTo(x, area.top); ctx.lineTo(x, area.bottom); ctx.stroke();
+        ctx.restore();
       }
     };
 
@@ -20666,7 +20692,7 @@ let currentPage='optionPayoff';    let optionPayoffData_ = null;
       const day = optionPayoffData_.days.find(function(row) { return row.date === date; });
       if (!day) return;
       document.getElementById('optionPayoffStatus').textContent = '';
-      document.getElementById('optionPayoffExpiry').textContent = '옵션 만기일: ' + day.expiry + ' · 선물 기준가: ' + day.futuresPrice;
+      document.getElementById('optionPayoffExpiry').textContent = '옵션 만기일: ' + day.expiry + ' · 선물 기준가: ' + day.futuresPrice.toLocaleString('ko-KR', { maximumFractionDigits: 2 });
       document.getElementById('optionPayoffTitle').textContent = date + ' 기준 만기손익';
       const body = document.getElementById('optionPayoffConversion'); body.replaceChildren();
       const nearest = day.conversion.reduce(function(best, row) { return Math.abs(row.strike - day.futuresPrice) < Math.abs(best.strike - day.futuresPrice) ? row : best; });
@@ -20686,14 +20712,20 @@ let currentPage='optionPayoff';    let optionPayoffData_ = null;
           pointRadius: 0, pointHitRadius: 12, tension: 0, fill: false
         }; });
         const options = { responsive: true, maintainAspectRatio: false, animation: false,
-          interaction: { mode: 'nearest', intersect: false },
+          interaction: { mode: 'nearest', axis: 'x', intersect: false },
           plugins: { optionPayoffGuides: { currentPrice: day.futuresPrice }, tooltip: { callbacks: {
-            title: function(items) { const item = items[0]; const row = series[item.datasetIndex]; const converted = optionPayoffIndex_(row, item.parsed.x); return item.parsed.x + (converted ? ' (' + converted + ')' : ''); },
+            title: function(items) {
+              if (!items.length) return '';
+              const item = items[0], row = series[item.datasetIndex];
+              return ['행사가: ' + item.parsed.x.toLocaleString('ko-KR', { maximumFractionDigits: 2 }),
+                'KOSPI 환산: ' + optionPayoffHoverIndex_(row, item.parsed.x)];
+            },
             label: function(item) { return item.dataset.label + ': ' + item.parsed.y.toLocaleString('ko-KR', { maximumFractionDigits: 2 }) + '억 원'; }
           } } },
-          scales: { x: { type: 'linear', title: { display: true, text: '행사가 (제공된 KOSPI 지수환산)' }, ticks: { callback: function(value) { const converted = optionPayoffIndex_(day, value); return value + (converted ? ' (' + converted + ')' : ''); } } },
+          scales: { x: { type: 'linear', title: { display: true, text: '행사가 (KOSPI 환산)' }, ticks: { callback: function(value) { const converted = optionPayoffIndex_(day, value); return Number(value).toLocaleString('ko-KR', { maximumFractionDigits: 2 }) + (converted ? ' (' + converted + ')' : ''); } } },
             y: { suggestedMin: 0, suggestedMax: 0, title: { display: true, text: '만기손익 (억 원)' } } }
         };
+        applyExportChartStyle_(options);
         if (optionPayoffCharts_[id]) {
           optionPayoffCharts_[id].data.datasets = datasets;
           optionPayoffCharts_[id].options = options;
