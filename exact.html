@@ -1529,8 +1529,8 @@
 
 <style id="tg-export-status-cards-v4">#page-exportStats .export-status-card{--export-tone:#73b7ff;--export-tone-rgb:115, 183, 255;border-top-color:rgba(var(--export-tone-rgb), .52)!important;background:linear-gradient(180deg, rgba(var(--export-tone-rgb), .075) 0, rgba(var(--export-tone-rgb), .018) 58px, transparent 112px), linear-gradient(180deg, #121e2e, #0b1421)!important;min-width:0!important;position:relative!important;box-shadow:0 12px 24px #0000002e,inset 0 1px #ffffff0e!important}#page-exportStats .export-status-card:before{content:"";z-index:2;background:linear-gradient(90deg, transparent, var(--export-tone) 18%, var(--export-tone) 82%, transparent);height:2px;box-shadow:0 0 12px rgba(var(--export-tone-rgb), .38);pointer-events:none;border-radius:0 0 999px 999px;position:absolute;top:0;left:12px;right:12px}#page-exportStats .tone-base{--export-tone:#9d8cff;--export-tone-rgb:157,140,255}#page-exportStats .tone-accelerating{--export-tone:#36d7b7;--export-tone-rgb:54,215,183}#page-exportStats .tone-weak{--export-tone:#ff6681;--export-tone-rgb:255,102,129}#page-exportStats .tone-slowing{--export-tone:#f7bd45;--export-tone-rgb:247,189,69}#page-exportStats .tone-recovering{--export-tone:#61adff;--export-tone-rgb:97,173,255}#page-exportStats .export-status-title{color:#eef5fc!important;min-width:0!important;text-shadow:none!important}#page-exportStats .export-status-title>span{text-overflow:ellipsis!important;white-space:nowrap!important;min-width:0!important;overflow:hidden!important}#page-exportStats .export-status-title>em{border-color:rgba(var(--export-tone-rgb), .28)!important;background:rgba(var(--export-tone-rgb), .12)!important;color:var(--export-tone)!important;flex:none!important;box-shadow:inset 0 1px #ffffff0e!important}#page-exportStats .export-status-chip-list{min-width:0!important;overflow-x:hidden!important}#page-exportStats .export-status-chip{box-sizing:border-box!important;background:linear-gradient(#182537f5,#101a29f5)!important;border-color:#7e9dc12e!important;align-items:center!important;min-width:0!important;max-width:100%!important;height:auto!important;min-height:44px!important;overflow:hidden!important}#page-exportStats .export-status-chip:hover,#page-exportStats .export-status-chip:focus-visible{border-color:rgba(var(--export-tone-rgb), .5)!important;background:linear-gradient(180deg, rgba(var(--export-tone-rgb), .12), #101a29f5)!important}#page-exportStats .export-status-chip.active{border-color:rgba(var(--export-tone-rgb), .68)!important;box-shadow:0 0 0 2px rgba(var(--export-tone-rgb), .1), inset 0 1px 0 #ffffff0e!important}#page-exportStats .export-status-item{flex:1 1 0!important;min-width:0!important;max-width:100%!important;overflow:hidden!important}#page-exportStats .export-status-item>strong,#page-exportStats .export-status-company{box-sizing:border-box!important;text-overflow:ellipsis!important;white-space:nowrap!important;width:100%!important;min-width:0!important;max-width:100%!important;display:block!important;overflow:hidden!important}#page-exportStats .export-status-item>strong{color:#f4f8fc!important;font-size:12px!important;line-height:1.2!important}#page-exportStats .export-status-company{color:#91a4ba!important;font-size:9px!important;line-height:1.2!important}#page-exportStats .export-status-numbers{flex:none!important;min-width:0!important;max-width:42%!important;overflow:hidden!important}#page-exportStats .export-status-numbers>b,#page-exportStats .export-status-numbers>small{text-overflow:ellipsis!important;white-space:nowrap!important;max-width:100%!important;display:block!important;overflow:hidden!important}</style>
 
-<script>window.TG_EXACT_BUILD_VERSION="2026-10-11.9";</script>
-  <script type="module" crossorigin src="/tg-index-webapp/assets/exact-D6-t7Fyb.js"></script>
+<script>window.TG_EXACT_BUILD_VERSION="2026-10-12.2";</script>
+  <script type="module" crossorigin src="/tg-index-webapp/assets/exact-BCMuF3Pu.js"></script>
 </head>
 
 <body>
@@ -1939,11 +1939,11 @@
 
         <div class="export-three-chart-grid">
           <section class="export-chart-panel">
-            <div class="export-chart-heading"><strong>월별 일평균 수출 · 일평균 YoY</strong><span>막대: 백만USD/일(누적액 아님) · 주황: 표시일까지의 잠정자료</span></div>
+            <div class="export-chart-heading"><strong>월별 일평균 수출 · 일평균 YoY</strong><span id="exportMonthlyChartNote">막대: 백만USD/일(누적액 아님) · 주황: 표시일까지의 잠정자료</span></div>
             <div class="export-chart-wrap"><canvas id="exportMonthlyChart"></canvas></div>
           </section>
           <section class="export-chart-panel">
-            <div class="export-chart-heading"><strong>분기 누적 수출액 · 금액 YoY</strong><span>막대: 백만USD 합계 · 주황: 표시일까지 누적 · 미완료 분기 YoY는 비교자료 부족으로 미표시</span></div>
+            <div class="export-chart-heading"><strong>분기 누적 수출액 · 금액 YoY</strong><span>막대: 백만USD 합계 · 주황: 진행 중 분기 · 회색: 과거 자료 누락 · 미완료·누락 분기 YoY 미표시</span></div>
             <div class="export-chart-wrap"><canvas id="exportQuarterlyChart"></canvas></div>
           </section>
           <section class="export-chart-panel">
@@ -2839,7 +2839,7 @@
     const domHtmlCache_ = typeof WeakMap !== 'undefined' ? new WeakMap() : null;
     const chartRenderKeys_ = {};
     const EXPECTED_DASHBOARD_SCHEMA_VERSION = '2026-07-20.1';
-    const LOADED_APP_BUILD_VERSION = "2026-10-11.9";
+    const LOADED_APP_BUILD_VERSION = "2026-10-12.2";
     const APP_DEPLOYMENT_URL = window.location.href;
     const APP_UPDATE_CHECK_INTERVAL_MS = 60 * 1000;
     let latestAppBuildVersion_ = LOADED_APP_BUILD_VERSION;
@@ -4751,7 +4751,7 @@
         exportMetricCard_('YoY', formatExportPct(item.yoyPct), getIndustryNumberClass(item.yoyPct)),
         exportMetricCard_('판가 YoY', formatExportPct(item.unitPriceYoyPct), getIndustryNumberClass(item.unitPriceYoyPct))
       ].join(''));
-      renderExportMonthlyChart_(data.monthly || []);
+      renderExportMonthlyChart_(data.monthly || [], data.reportingMonth);
       renderExportQuarterlyChart_(data.quarterly || []);
       renderExportPriceVolumeChart_(data.monthly || []);
     }
@@ -4782,18 +4782,21 @@
       };
     }
 
-    function renderExportMonthlyChart_(rows) {
+    function renderExportMonthlyChart_(rows, reportingMonth) {
       exportMonthlyChart = destroyExportChart_(exportMonthlyChart);
       const ctx = getChartContext_('exportMonthlyChart');
       const recent = (rows || []).slice(-24);
+      if (reportingMonth && recent.length && recent[recent.length - 1].month < reportingMonth) recent.push({month: reportingMonth, label: reportingMonth + ' (자료 미집계)', dailyAvgUsd: null, yoyPct: null, partial: false});
       if (!ctx || !recent.length) return;
+      const extremeYoy = recent.filter(function(row) { return typeof row.yoyPct === 'number' && Math.abs(row.yoyPct) > 1000; }).sort(function(a, b) { return Math.abs(b.yoyPct) - Math.abs(a.yoyPct); })[0];
+      setTextIfChanged_(document.getElementById('exportMonthlyChartNote'), '막대: 백만USD/일(누적액 아님) · 주황: 표시일까지의 잠정자료' + (extremeYoy ? ' · ' + extremeYoy.month + ' YoY ' + formatExportPct(extremeYoy.yoyPct) + ': ±1,000% 초과로 YoY 기본 숨김. 범례 YoY를 누르면 원값 전체 표시' : ''));
       exportMonthlyChart = new Chart(ctx, {
         type: 'bar',
         data: {
           labels: recent.map(function(row) { return row.label || row.month; }),
           datasets: [
             { type: 'bar', order: 2, label: '일평균 수출', data: recent.map(function(row) { return row.dailyAvgUsd === null ? null : row.dailyAvgUsd / 1000000; }), yAxisID: 'yLeft', backgroundColor: recent.map(function(row) { return row.partial ? 'rgba(244,145,48,.82)' : 'rgba(56,189,248,.68)'; }), borderColor: recent.map(function(row) { return row.partial ? '#fb923c' : '#38bdf8'; }), borderWidth: 1, borderRadius: 5 },
-            { type: 'line', order: 1, label: 'YoY', data: recent.map(function(row) { return row.yoyPct; }), yAxisID: 'yRight', borderColor: '#fb7185', backgroundColor: '#fb7185', borderWidth: 2.2, pointRadius: 1.8, tension: .25, spanGaps: true }
+            { type: 'line', order: 1, label: 'YoY', hidden: !!extremeYoy, data: recent.map(function(row) { return row.yoyPct; }), yAxisID: 'yRight', borderColor: '#fb7185', backgroundColor: '#fb7185', borderWidth: 2.2, pointRadius: 1.8, tension: .25, spanGaps: false }
           ]
         },
         options: getExportDualAxisOptions_('백만USD/일', 'YoY')
@@ -4809,7 +4812,7 @@
         data: {
           labels: rows.map(function(row) { return row.label; }),
           datasets: [
-            { type: 'bar', order: 2, label: '분기 누적 수출액', data: rows.map(function(row) { return row.exportUsd === null ? null : row.exportUsd / 1000000; }), yAxisID: 'yLeft', backgroundColor: rows.map(function(row) { return row.partial ? 'rgba(244,145,48,.82)' : 'rgba(56,189,248,.68)'; }), borderColor: rows.map(function(row) { return row.partial ? '#fb923c' : '#38bdf8'; }), borderWidth: 1, borderRadius: 5 },
+            { type: 'bar', order: 2, label: '분기 누적 수출액', data: rows.map(function(row) { return row.exportUsd === null ? null : row.exportUsd / 1000000; }), yAxisID: 'yLeft', backgroundColor: rows.map(function(row) { return row.missingData ? 'rgba(148,163,184,.55)' : row.inProgress ? 'rgba(244,145,48,.82)' : 'rgba(56,189,248,.68)'; }), borderColor: rows.map(function(row) { return row.missingData ? '#94a3b8' : row.inProgress ? '#fb923c' : '#38bdf8'; }), borderWidth: 1, borderRadius: 5 },
             { type: 'line', order: 1, label: 'YoY', data: rows.map(function(row) { return row.partial ? null : row.yoyPct; }), yAxisID: 'yRight', borderColor: '#fb7185', backgroundColor: '#fb7185', borderWidth: 2.2, pointRadius: 2, tension: .25, spanGaps: false }
           ]
         },
