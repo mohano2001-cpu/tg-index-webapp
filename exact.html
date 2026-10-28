@@ -1529,7 +1529,7 @@
 
 <style id="tg-export-status-cards-v4">#page-exportStats .export-status-card{--export-tone:#73b7ff;--export-tone-rgb:115, 183, 255;border-top-color:rgba(var(--export-tone-rgb), .52)!important;background:linear-gradient(180deg, rgba(var(--export-tone-rgb), .075) 0, rgba(var(--export-tone-rgb), .018) 58px, transparent 112px), linear-gradient(180deg, #121e2e, #0b1421)!important;min-width:0!important;position:relative!important;box-shadow:0 12px 24px #0000002e,inset 0 1px #ffffff0e!important}#page-exportStats .export-status-card:before{content:"";z-index:2;background:linear-gradient(90deg, transparent, var(--export-tone) 18%, var(--export-tone) 82%, transparent);height:2px;box-shadow:0 0 12px rgba(var(--export-tone-rgb), .38);pointer-events:none;border-radius:0 0 999px 999px;position:absolute;top:0;left:12px;right:12px}#page-exportStats .tone-base{--export-tone:#9d8cff;--export-tone-rgb:157,140,255}#page-exportStats .tone-accelerating{--export-tone:#36d7b7;--export-tone-rgb:54,215,183}#page-exportStats .tone-weak{--export-tone:#ff6681;--export-tone-rgb:255,102,129}#page-exportStats .tone-slowing{--export-tone:#f7bd45;--export-tone-rgb:247,189,69}#page-exportStats .tone-recovering{--export-tone:#61adff;--export-tone-rgb:97,173,255}#page-exportStats .export-status-title{color:#eef5fc!important;min-width:0!important;text-shadow:none!important}#page-exportStats .export-status-title>span{text-overflow:ellipsis!important;white-space:nowrap!important;min-width:0!important;overflow:hidden!important}#page-exportStats .export-status-title>em{border-color:rgba(var(--export-tone-rgb), .28)!important;background:rgba(var(--export-tone-rgb), .12)!important;color:var(--export-tone)!important;flex:none!important;box-shadow:inset 0 1px #ffffff0e!important}#page-exportStats .export-status-chip-list{min-width:0!important;overflow-x:hidden!important}#page-exportStats .export-status-chip{box-sizing:border-box!important;background:linear-gradient(#182537f5,#101a29f5)!important;border-color:#7e9dc12e!important;align-items:center!important;min-width:0!important;max-width:100%!important;height:auto!important;min-height:44px!important;overflow:hidden!important}#page-exportStats .export-status-chip:hover,#page-exportStats .export-status-chip:focus-visible{border-color:rgba(var(--export-tone-rgb), .5)!important;background:linear-gradient(180deg, rgba(var(--export-tone-rgb), .12), #101a29f5)!important}#page-exportStats .export-status-chip.active{border-color:rgba(var(--export-tone-rgb), .68)!important;box-shadow:0 0 0 2px rgba(var(--export-tone-rgb), .1), inset 0 1px 0 #ffffff0e!important}#page-exportStats .export-status-item{flex:1 1 0!important;min-width:0!important;max-width:100%!important;overflow:hidden!important}#page-exportStats .export-status-item>strong,#page-exportStats .export-status-company{box-sizing:border-box!important;text-overflow:ellipsis!important;white-space:nowrap!important;width:100%!important;min-width:0!important;max-width:100%!important;display:block!important;overflow:hidden!important}#page-exportStats .export-status-item>strong{color:#f4f8fc!important;font-size:12px!important;line-height:1.2!important}#page-exportStats .export-status-company{color:#91a4ba!important;font-size:9px!important;line-height:1.2!important}#page-exportStats .export-status-numbers{flex:none!important;min-width:0!important;max-width:42%!important;overflow:hidden!important}#page-exportStats .export-status-numbers>b,#page-exportStats .export-status-numbers>small{text-overflow:ellipsis!important;white-space:nowrap!important;max-width:100%!important;display:block!important;overflow:hidden!important}</style>
 
-<script>window.TG_EXACT_BUILD_VERSION="2026-10-28.1";</script>
+<script>window.TG_EXACT_BUILD_VERSION="2026-10-29.1";</script>
   <script type="module" crossorigin src="/tg-index-webapp/assets/exact-DSytui7y.js"></script>
 </head>
 
@@ -4359,6 +4359,33 @@
       return value.toLocaleString('ko-KR', { maximumFractionDigits: 2 }) + ' (보간값)';
     }
 
+    function optionPayoffConversionRows_(day) {
+      const original = day.conversion.slice().sort(function(a, b) { return a.strike - b.strike; });
+      if (original.length < 2 || !day.points.length) return original;
+      const steps = original.slice(1).map(function(row, i) { return row.strike - original[i].strike; }).filter(function(step) { return step > 0; });
+      const step = Math.min.apply(null, steps);
+      if (!Number.isFinite(step) || step <= 0) return original;
+      const minimum = Math.min.apply(null, day.points.map(function(point) { return point.strike; }));
+      const maximum = Math.max.apply(null, day.points.map(function(point) { return point.strike; }));
+      const ratios = original.filter(function(row) { return row.strike > 0 && Number.isFinite(row.kospi); })
+        .map(function(row) { return row.kospi / row.strike; }).sort(function(a, b) { return a - b; });
+      if (!ratios.length) return original;
+      const middle = Math.floor(ratios.length / 2);
+      const ratio = ratios.length % 2 ? ratios[middle] : (ratios[middle - 1] + ratios[middle]) / 2;
+      const strikes = [minimum, maximum].concat(original.map(function(row) { return row.strike; }));
+      const first = Math.ceil((minimum - original[0].strike) / step);
+      const last = Math.floor((maximum - original[0].strike) / step);
+      if (last - first > 2000) return original;
+      for (let index = first; index <= last; index += 1) strikes.push(Number((original[0].strike + index * step).toFixed(6)));
+      return strikes.filter(function(strike) { return strike >= minimum && strike <= maximum; })
+        .sort(function(a, b) { return a - b; })
+        .filter(function(strike, i, values) { return !i || Math.abs(strike - values[i - 1]) > 0.000001; })
+        .map(function(strike) {
+          const exact = original.find(function(row) { return Math.abs(row.strike - strike) < 0.000001; });
+          return exact || { strike: strike, kospi: strike * ratio, calculated: true };
+        });
+    }
+
     const optionPayoffGuides_ = {
       id: 'optionPayoffGuides',
       beforeDatasetsDraw: function(chart, args, options) {
@@ -4405,12 +4432,16 @@
       document.getElementById('optionPayoffExpiry').textContent = '옵션 만기일: ' + day.expiry + ' · 선물 기준가: ' + day.futuresPrice.toLocaleString('ko-KR', { maximumFractionDigits: 2 });
       document.getElementById('optionPayoffTitle').textContent = date + ' 기준 만기손익';
       const body = document.getElementById('optionPayoffConversion'); body.replaceChildren();
-      const nearest = day.conversion.reduce(function(best, row) { return Math.abs(row.strike - day.futuresPrice) < Math.abs(best.strike - day.futuresPrice) ? row : best; });
-      day.conversion.forEach(function(row) {
+      const conversionRows = optionPayoffConversionRows_(day);
+      const nearest = conversionRows.reduce(function(best, row) { return Math.abs(row.strike - day.futuresPrice) < Math.abs(best.strike - day.futuresPrice) ? row : best; });
+      conversionRows.forEach(function(row) {
         const tr = document.createElement('tr');
         if (row === nearest) tr.className = 'is-current';
-        [row.strike, row.kospi].forEach(function(value) {
-          const td = document.createElement('td'); td.textContent = value.toLocaleString('ko-KR', { maximumFractionDigits: 2 }); tr.appendChild(td);
+        [row.strike, row.kospi].forEach(function(value, column) {
+          const td = document.createElement('td');
+          td.textContent = (column === 1 && row.calculated ? '\u2248 ' : '') + value.toLocaleString('ko-KR', { maximumFractionDigits: 2 });
+          if (column === 1 && row.calculated) td.title = '제공사 환산표의 중앙 환산비율을 적용한 계산값';
+          tr.appendChild(td);
         }); body.appendChild(tr);
       });
       const recent = optionPayoffRecentDays_(optionPayoffData_.days, date);
