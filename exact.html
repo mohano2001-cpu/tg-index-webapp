@@ -1738,7 +1738,129 @@
         <button class="range-btn korea" data-range="3650" onclick="setKoreaRange(3650)">10년</button>
         <button class="range-btn korea" data-range="all" onclick="setKoreaRange('all')">전체</button>
       </section>
-      <section class="chart-card chart-card-clickable" onclick="openZoomChart('koreaPer')"><div class="chart-header"><div><h2>코스피 12개월 선행 PER</h2><p>단위: 배 · 탭하면 확대</p></div></div><canvas id="koreaPerChart"></canvas></section>
+      <script>window.TG_KOREA_CYCLE_SNAPSHOT_URL="./data/korea-cycle.json";</script>
+<!-- korea-cycle-comparison-v1 -->
+<style>
+#koreaCycleCard .korea-cycle-toolbar{display:flex;align-items:center;justify-content:flex-end;gap:10px;flex-wrap:wrap;margin-bottom:10px}
+#koreaCycleCard .korea-cycle-ranges{display:none;gap:6px;flex-wrap:wrap}
+#koreaCycleCard.is-expanded .korea-cycle-ranges{display:flex}
+#koreaCycleCard.is-expanded .korea-cycle-toolbar{justify-content:space-between}
+#koreaCycleCard .korea-cycle-ranges .range-btn{flex:0 0 auto;min-width:44px;height:32px;padding:4px 10px}
+#koreaCycleCard>.dataset-toggle-row{display:none}
+#koreaCycleCard .korea-cycle-panels{height:min(650px,80vh);min-height:440px;display:grid;grid-template-rows:1.15fr .85fr 1fr;gap:9px}
+#koreaCycleCard .korea-cycle-panel{min-height:0;min-width:0;display:grid;grid-template-rows:auto minmax(0,1fr)}
+#koreaCycleCard .korea-cycle-panel-header{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:3px}
+#koreaCycleCard h3{font-size:12px;line-height:1.35;margin:0;color:#dbe7f3}
+#koreaCycleCard .chart-update-date{margin:0;font-size:10px}
+#koreaCycleCard .unified-chart-wrap{margin:0;height:100%;min-height:0;border-radius:12px}
+#koreaCycleCard .korea-cycle-note{font-size:11px;line-height:1.5;color:#98a8bc;margin:10px 0 0}
+#koreaCycleCard .korea-cycle-status{font-size:12px;color:#fbbf24}
+#koreaCycleCard.is-expanded{position:fixed;inset:0;z-index:18000;margin:0;overflow:auto;background:#070b12!important;border-radius:0;padding:16px;width:100%;height:100dvh}
+#koreaCycleCard.is-expanded .korea-cycle-panels{height:calc(100dvh - 150px);min-height:430px}
+@media(max-width:620px){#koreaCycleCard .korea-cycle-panels{height:76vh;min-height:430px}#koreaCycleCard .korea-cycle-panel-header{gap:3px}#koreaCycleCard.is-expanded{padding:12px}}
+</style>
+<section class="chart-card" id="koreaCycleCard">
+  <div class="chart-header"><div><h2>코스피 낙폭 · 실적 · 경기 사이클</h2><p>52주 최고 종가 대비 낙폭 · 12개월 선행 EPS · OECD 경기선행지수</p></div></div>
+  <div class="korea-cycle-toolbar">
+    <div class="korea-cycle-ranges" role="group" aria-label="비교 기간">
+      <button type="button" class="range-btn active" data-cycle-range="365" onclick="TGKoreaCycle.setRange(365)">1년</button>
+      <button type="button" class="range-btn" data-cycle-range="1095" onclick="TGKoreaCycle.setRange(1095)">3년</button>
+      <button type="button" class="range-btn" data-cycle-range="1825" onclick="TGKoreaCycle.setRange(1825)">5년</button>
+      <button type="button" class="range-btn" data-cycle-range="3650" onclick="TGKoreaCycle.setRange(3650)">10년</button>
+      <button type="button" class="range-btn" data-cycle-range="all" onclick="TGKoreaCycle.setRange('all')">전체</button>
+    </div>
+    <button type="button" class="chart-card-open-btn blog-feed-expand" id="koreaCycleExpand" onclick="TGKoreaCycle.expand()" title="세 그래프 함께 확대">확대</button>
+  </div>
+  <div class="korea-cycle-status" id="koreaCycleStatus" role="status">데이터 확인 중</div>
+  <button type="button" class="range-btn" id="koreaCycleRetry" hidden onclick="TGKoreaCycle.retry()">다시 불러오기</button>
+  <div class="korea-cycle-panels">
+    <div class="korea-cycle-panel"><div class="korea-cycle-panel-header"><h3>코스피 52주 낙폭 (%)</h3><span id="koreaCycleDdDate" class="chart-update-date"></span></div><div class="unified-chart-wrap"><canvas id="koreaCycleDrawdown"></canvas></div></div>
+    <div class="korea-cycle-panel"><div class="korea-cycle-panel-header"><h3>12개월 선행 EPS (로그축)</h3><span id="koreaCycleEpsDate" class="chart-update-date"></span></div><div class="unified-chart-wrap"><canvas id="koreaCycleEps"></canvas></div></div>
+    <div class="korea-cycle-panel"><div class="korea-cycle-panel-header"><h3>OECD 경기선행지수 (장기추세=100)</h3><span id="koreaCycleCliDate" class="chart-update-date"></span></div><div class="unified-chart-wrap"><canvas id="koreaCycleCli"></canvas></div></div>
+  </div>
+  <p class="korea-cycle-note">과거 EPS는 이미지 디지타이징 월별 추정값입니다. 2026-04-17 이후는 기존 대신증권 관측값이며, 과거 추정값의 원본 축 설정은 미확인입니다.</p>
+</section>
+<script>
+(function(){
+  'use strict';
+  var state={data:null,pending:null,range:365,charts:[],cursor:null,overflow:'',error:false};
+  var orange='#f59e0b';
+  function ms(date){return Date.parse(String(date).length===7?date+'-01T00:00:00Z':date+'T00:00:00Z');}
+  function active(){var page=document.getElementById('page-korea');return !!(page&&page.classList.contains('active'));}
+  function ready(){return !!window.TG_EXACT_BUILD_VERSION||(typeof appAuthUser_!=='undefined'&&!!appAuthUser_);}
+  function point(row){return {x:ms(row[0]),y:row[1],date:row[0]};}
+  function line(name,rows,color,extra){return Object.assign({label:name,data:rows.map(point),borderColor:color,backgroundColor:color,borderWidth:1.6,pointRadius:0,pointHitRadius:8,tension:0,spanGaps:false,parsing:false},extra||{});}
+  function badge(id,date){var el=document.getElementById(id);el.textContent='최신 업데이트: '+date;el.classList.toggle('is-recent',typeof isRecentChartDateLabel_==='function'&&isRecentChartDateLabel_(date));}
+  function tick(value,min,max){var d=new Date(Number(value));return max-min>86400000*800?String(d.getUTCFullYear()):d.toISOString().slice(0,7);}
+  function rangeData(rows,min){
+    var i=rows.findIndex(function(r){return ms(r[0])>=min;});
+    return i<0?[]:rows.slice(Math.max(0,i-1));
+  }
+  var guide={id:'koreaCycleCursor',afterDraw:function(chart){
+    if(state.cursor===null)return;var x=chart.scales.x.getPixelForValue(state.cursor),a=chart.chartArea;
+    if(x<a.left||x>a.right)return;var c=chart.ctx;c.save();c.strokeStyle='rgba(203,213,225,.5)';c.lineWidth=1;c.beginPath();c.moveTo(x,a.top);c.lineTo(x,a.bottom);c.stroke();c.restore();
+  }};
+  function options(min,max,kind){
+    var o=getSingleAxisOptions();o.animation=false;o.parsing=false;o.normalized=true;
+    o.layout={padding:{left:3,right:8,top:0,bottom:0}};
+    o.interaction={mode:'nearest',axis:'x',intersect:false};
+    o.scales.x={type:'linear',min:min,max:max,grid:{color:'rgba(148,163,184,.06)'},ticks:{maxTicksLimit:6,callback:function(v){return tick(v,min,max);}}};
+    o.scales.y.afterFit=function(axis){axis.width=58;};
+    if(kind==='drawdown'){o.scales.y.min=-70;o.scales.y.max=0;o.scales.y.ticks.callback=function(v){return v+'%';};}
+    if(kind==='eps'){o.scales.y.type='logarithmic';o.scales.y.min=30;o.scales.y.max=2240;o.scales.y.afterBuildTicks=function(axis){axis.ticks=[35,70,140,280,560,1120,2240].map(function(v){return {value:v};});};o.scales.y.ticks.callback=function(v){return Number(v).toLocaleString('en-US');};}
+    if(kind==='cli'){o.scales.y.ticks.callback=function(v){return Number(v).toFixed(0);};}
+    o.plugins.legend.labels.filter=function(item){return item.text!=='-20% 기준'&&item.text!=='-30% 기준'&&item.text!=='기준선 100';};
+    o.plugins.tooltip.callbacks={title:function(items){return items.length&&items[0].raw?items[0].raw.date:'';},label:function(ctx){return ctx.dataset.label+': '+Number(ctx.parsed.y).toLocaleString('en-US',{maximumFractionDigits:kind==='eps'?2:1})+(kind==='drawdown'?'%':'');}};
+    o.onHover=function(event){var chart=state.charts.find(function(c){return c.canvas===event.native.target;});if(!chart)return;state.cursor=chart.scales.x.getValueForPixel(event.x);state.charts.forEach(function(c){c.draw();});};
+    return o;
+  }
+  function render(){
+    if(!state.data||!active()||typeof Chart==='undefined')return;
+    var d=state.data,max=ms(d.meta.maxDate),min=state.range==='all'?ms(d.meta.startDate):max-Number(state.range)*86400000;
+    var dd=rangeData(d.drawdown,min),est=rangeData(d.epsEstimated,min),obs=rangeData(d.epsObserved,min),cli=rangeData(d.cli,min);
+    var ref=function(v){return [[new Date(min).toISOString().slice(0,10),v],[d.meta.maxDate,v]];};
+    var specs=[['koreaCycleDrawdown','drawdown',[line('KOSPI 52주 낙폭',dd,'#60a5fa'),line('-20% 기준',ref(-20),'#ff335f',{borderDash:[4,4],borderWidth:1}),line('-30% 기준',ref(-30),'#ff335f',{borderWidth:1})]],
+      ['koreaCycleEps','eps',[line('EPS 디지타이징 추정',est,'#ff879a'),line('EPS 대신증권 관측값',obs,'#ff335f')]],
+      ['koreaCycleCli','cli',[line('G7',cli.map(function(r){return [r[0],r[1]];}),orange),line('Europe Big4',cli.map(function(r){return [r[0],r[2]];}),'#a0a5ab'),line('Major Five Asia',cli.map(function(r){return [r[0],r[3]];}),'#60a5fa'),line('Korea',cli.map(function(r){return [r[0],r[4]];}),'#ff335f'),line('기준선 100',ref(100),'#64748b',{borderDash:[4,4],borderWidth:1})]]];
+    state.charts.forEach(function(c){c.destroy();});state.charts=[];
+    specs.forEach(function(s){state.charts.push(new Chart(document.getElementById(s[0]),{type:'line',data:{datasets:s[2]},options:options(min,max,s[1]),plugins:[guide]}));});
+    badge('koreaCycleDdDate',d.meta.drawdownDate);badge('koreaCycleEpsDate',d.meta.epsDate);badge('koreaCycleCliDate',d.meta.cliDate);
+  }
+  function load(){
+    if(!active()||!ready())return;if(state.data){render();return;}if(state.pending||state.error)return;
+    var status=document.getElementById('koreaCycleStatus'),retry=document.getElementById('koreaCycleRetry');
+    status.hidden=false;status.textContent='데이터 확인 중';retry.hidden=true;
+    var controller=new AbortController(),timeoutReject;
+    var timeout=new Promise(function(resolve,reject){timeoutReject=reject;});
+    var timer=setTimeout(function(){controller.abort();timeoutReject(new Error('Cycle data timeout'));},15000);
+    var request;
+    if(window.TG_KOREA_CYCLE_SNAPSHOT_URL){request=fetch(window.TG_KOREA_CYCLE_SNAPSHOT_URL,{signal:controller.signal,cache:'no-cache'}).then(function(r){if(!r.ok)throw new Error('HTTP '+r.status);return r.json();});}
+    else if(window.TG_EXACT_BUILD_VERSION){request=Promise.reject(new Error('Private cycle data is available in the authenticated app only'));}
+    else {request=new Promise(function(resolve,reject){google.script.run.withSuccessHandler(resolve).withFailureHandler(reject).getKoreaCycleData({sessionToken:appAuthSessionToken_,clientId:appAuthClientId_});});}
+    state.pending=Promise.race([request,timeout]).then(function(d){
+      if(d.schemaVersion!==1||!d.meta||!Array.isArray(d.drawdown)||!d.drawdown.length||!Array.isArray(d.cli)||!d.cli.length)throw new Error('Invalid cycle snapshot');
+      state.data=d;status.hidden=true;render();
+    }).catch(function(error){state.error=true;status.textContent='비교 데이터를 불러오지 못했습니다.';retry.hidden=false;console.warn('Korea cycle snapshot:',error.message);}).finally(function(){clearTimeout(timer);state.pending=null;});
+  }
+  function markRange(){document.querySelectorAll('[data-cycle-range]').forEach(function(b){b.classList.toggle('active',b.dataset.cycleRange===String(state.range));});}
+  function syncRange(){var range=typeof koreaRange!=='undefined'?koreaRange:365;if(state.range!==range){state.range=range;markRange();render();}}
+  window.TGKoreaCycle={setRange:function(range){if(['all',365,1095,1825,3650].indexOf(range)<0)return;state.range=range;if(typeof setKoreaRange==='function'&&typeof koreaRange!=='undefined'&&koreaRange!==range)setKoreaRange(range);markRange();render();},retry:function(){state.error=false;load();},expand:function(){
+    var card=document.getElementById('koreaCycleCard'),expanded=card.classList.toggle('is-expanded');
+    if(expanded){state.overflow=document.body.style.overflow;document.body.style.overflow='hidden';state.slot=document.createComment('cycle-comparison-slot');card.parentNode.insertBefore(state.slot,card);document.body.appendChild(card);card.setAttribute('role','dialog');card.setAttribute('aria-modal','true');}
+    else {document.body.style.overflow=state.overflow;if(state.slot)state.slot.replaceWith(card);card.removeAttribute('role');card.removeAttribute('aria-modal');}
+    document.getElementById('koreaCycleExpand').textContent=expanded?'닫기':'확대';requestAnimationFrame(function(){state.charts.forEach(function(c){c.resize();});});
+  }};
+  function install(){var page=document.getElementById('page-korea');if(!page)return;new MutationObserver(load).observe(page,{attributes:true,attributeFilter:['class']});
+    var rangeBox=document.querySelector('#page-korea .range-box');if(rangeBox)new MutationObserver(syncRange).observe(rangeBox,{attributes:true,attributeFilter:['class'],subtree:true});syncRange();markRange();
+    document.getElementById('koreaCycleCard').addEventListener('mouseleave',function(){state.cursor=null;state.charts.forEach(function(c){c.draw();});});
+    document.addEventListener('keydown',function(e){if(e.key==='Escape'&&document.getElementById('koreaCycleCard').classList.contains('is-expanded'))window.TGKoreaCycle.expand();});load();
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',install,{once:true});else install();
+})();
+</script>
+<!-- /korea-cycle-comparison-v1 -->
+
+<section class="chart-card chart-card-clickable" onclick="openZoomChart('koreaPer')"><div class="chart-header"><div><h2>코스피 12개월 선행 PER</h2><p>단위: 배 · 탭하면 확대</p></div></div><canvas id="koreaPerChart"></canvas></section>
       <section class="chart-card chart-card-clickable" onclick="openZoomChart('foreignStrength')"><div class="chart-header"><div><h2>외국인 누적 순매수강도</h2><p>10일 / 20일, 단위: % · 탭하면 확대</p></div></div><canvas id="foreignStrengthChart"></canvas></section>
       <section class="chart-card chart-card-clickable" onclick="openZoomChart('turnover')"><div class="chart-header"><div><h2>회전율</h2><p>단위: % · 탭하면 확대</p></div></div><canvas id="turnoverChart"></canvas></section>
       <section class="chart-card chart-card-clickable" onclick="openZoomChart('forcedLiquidation')"><div class="chart-header"><div><h2>미수금 대비 반대매매비중</h2><p>단위: % · 탭하면 확대</p></div></div><canvas id="forcedLiquidationChart"></canvas></section>
