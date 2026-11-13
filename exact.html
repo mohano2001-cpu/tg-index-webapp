@@ -2975,7 +2975,7 @@
     const domHtmlCache_ = typeof WeakMap !== 'undefined' ? new WeakMap() : null;
     const chartRenderKeys_ = {};
     const EXPECTED_DASHBOARD_SCHEMA_VERSION = '2026-07-20.1';
-    const LOADED_APP_BUILD_VERSION = "2026-10-15.dc1";
+    const LOADED_APP_BUILD_VERSION = "2026-11-13.1";
     const APP_DEPLOYMENT_URL = window.location.href;
     const APP_UPDATE_CHECK_INTERVAL_MS = 60 * 1000;
     let latestAppBuildVersion_ = LOADED_APP_BUILD_VERSION;
@@ -4463,7 +4463,7 @@
 
     function optionPayoffRecentDays_(days, date) {
       const selected = days.find(function(day) { return day.date === date; });
-      return selected ? days.filter(function(day) { return day.date <= date && day.expiry === selected.expiry; }).slice(-5) : [];
+      return selected ? days.filter(function(day) { return day.date <= date; }).slice(-5) : [];
     }
 
     function optionPayoffIndex_(day, strike) {
@@ -4555,7 +4555,7 @@
       document.getElementById('optionPayoffTitle').textContent = date + ' 기준 만기손익';
       const body = document.getElementById('optionPayoffConversion'); body.replaceChildren();
       const conversionRows = optionPayoffConversionRows_(day);
-      const nearest = conversionRows.reduce(function(best, row) { return Math.abs(row.strike - day.futuresPrice) < Math.abs(best.strike - day.futuresPrice) ? row : best; });
+      const nearest = conversionRows.length ? conversionRows.reduce(function(best, row) { return Math.abs(row.strike - day.futuresPrice) < Math.abs(best.strike - day.futuresPrice) ? row : best; }) : null;
       conversionRows.forEach(function(row) {
         const tr = document.createElement('tr');
         if (row === nearest) tr.className = 'is-current';
@@ -4570,7 +4570,7 @@
       const colors = ['#ffd166', '#34d399', '#38bdf8', '#c084fc', '#ff245b'].slice(-recent.length);
       function draw(id, series, palette) {
         const datasets = series.map(function(row, i) { return {
-          label: row.date, data: row.points.map(function(point) { return { x: point.strike, y: point.payoff }; }),
+          label: row.date + ' (만기 ' + row.expiry.slice(5) + ')', data: row.points.map(function(point) { return { x: point.strike, y: point.payoff }; }),
           borderColor: palette[i], backgroundColor: palette[i], borderWidth: i === series.length - 1 ? 2.5 : 1.5,
           pointRadius: 0, pointHitRadius: 12, tension: 0, fill: false
         }; });
