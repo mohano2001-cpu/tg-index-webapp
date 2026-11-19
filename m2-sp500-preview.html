@@ -9562,6 +9562,7 @@
       const options = zoom ? getZoomDualAxisOptions('%', 'pt') : getDualAxisOptions('%', 'pt');
       options.scales.yLeft.ticks.callback = value => Number(value).toFixed(1) + '%';
       options.scales.yRight.ticks.callback = value => Number(value).toLocaleString('en-US');
+      options.scales.x.ticks.maxTicksLimit = window.innerWidth < 620 ? 3 : (zoom ? 8 : 5);
       return options;
     }
 
