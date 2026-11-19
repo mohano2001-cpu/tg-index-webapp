@@ -1529,7 +1529,7 @@
 
 <style id="tg-export-status-cards-v4">#page-exportStats .export-status-card{--export-tone:#73b7ff;--export-tone-rgb:115, 183, 255;border-top-color:rgba(var(--export-tone-rgb), .52)!important;background:linear-gradient(180deg, rgba(var(--export-tone-rgb), .075) 0, rgba(var(--export-tone-rgb), .018) 58px, transparent 112px), linear-gradient(180deg, #121e2e, #0b1421)!important;min-width:0!important;position:relative!important;box-shadow:0 12px 24px #0000002e,inset 0 1px #ffffff0e!important}#page-exportStats .export-status-card:before{content:"";z-index:2;background:linear-gradient(90deg, transparent, var(--export-tone) 18%, var(--export-tone) 82%, transparent);height:2px;box-shadow:0 0 12px rgba(var(--export-tone-rgb), .38);pointer-events:none;border-radius:0 0 999px 999px;position:absolute;top:0;left:12px;right:12px}#page-exportStats .tone-base{--export-tone:#9d8cff;--export-tone-rgb:157,140,255}#page-exportStats .tone-accelerating{--export-tone:#36d7b7;--export-tone-rgb:54,215,183}#page-exportStats .tone-weak{--export-tone:#ff6681;--export-tone-rgb:255,102,129}#page-exportStats .tone-slowing{--export-tone:#f7bd45;--export-tone-rgb:247,189,69}#page-exportStats .tone-recovering{--export-tone:#61adff;--export-tone-rgb:97,173,255}#page-exportStats .export-status-title{color:#eef5fc!important;min-width:0!important;text-shadow:none!important}#page-exportStats .export-status-title>span{text-overflow:ellipsis!important;white-space:nowrap!important;min-width:0!important;overflow:hidden!important}#page-exportStats .export-status-title>em{border-color:rgba(var(--export-tone-rgb), .28)!important;background:rgba(var(--export-tone-rgb), .12)!important;color:var(--export-tone)!important;flex:none!important;box-shadow:inset 0 1px #ffffff0e!important}#page-exportStats .export-status-chip-list{min-width:0!important;overflow-x:hidden!important}#page-exportStats .export-status-chip{box-sizing:border-box!important;background:linear-gradient(#182537f5,#101a29f5)!important;border-color:#7e9dc12e!important;align-items:center!important;min-width:0!important;max-width:100%!important;height:auto!important;min-height:44px!important;overflow:hidden!important}#page-exportStats .export-status-chip:hover,#page-exportStats .export-status-chip:focus-visible{border-color:rgba(var(--export-tone-rgb), .5)!important;background:linear-gradient(180deg, rgba(var(--export-tone-rgb), .12), #101a29f5)!important}#page-exportStats .export-status-chip.active{border-color:rgba(var(--export-tone-rgb), .68)!important;box-shadow:0 0 0 2px rgba(var(--export-tone-rgb), .1), inset 0 1px 0 #ffffff0e!important}#page-exportStats .export-status-item{flex:1 1 0!important;min-width:0!important;max-width:100%!important;overflow:hidden!important}#page-exportStats .export-status-item>strong,#page-exportStats .export-status-company{box-sizing:border-box!important;text-overflow:ellipsis!important;white-space:nowrap!important;width:100%!important;min-width:0!important;max-width:100%!important;display:block!important;overflow:hidden!important}#page-exportStats .export-status-item>strong{color:#f4f8fc!important;font-size:12px!important;line-height:1.2!important}#page-exportStats .export-status-company{color:#91a4ba!important;font-size:9px!important;line-height:1.2!important}#page-exportStats .export-status-numbers{flex:none!important;min-width:0!important;max-width:42%!important;overflow:hidden!important}#page-exportStats .export-status-numbers>b,#page-exportStats .export-status-numbers>small{text-overflow:ellipsis!important;white-space:nowrap!important;max-width:100%!important;display:block!important;overflow:hidden!important}</style>
 
-<script>window.TG_EXACT_BUILD_VERSION="2026-10-29.1";</script>
+<script>window.TG_EXACT_BUILD_VERSION="2026-11-19.1";</script>
   <script type="module" crossorigin src="/tg-index-webapp/assets/exact-DSytui7y.js"></script>
 </head>
 
@@ -1635,6 +1635,7 @@
       <section class="chart-card chart-card-clickable" onclick="openZoomChart('vixMove')"><div class="chart-header"><div><h2>VIX vs MOVE</h2><p>좌측축: VIX / 우측축: MOVE · 탭하면 확대</p></div></div><canvas id="vixMoveChart"></canvas></section>
       <section class="chart-card chart-card-clickable" onclick="openZoomChart('hySpread')"><div class="chart-header"><div><h2>미국 하이일드 스프레드</h2><p>HY OAS / 20D MA / 60D MA, 단위: % · 탭하면 확대</p></div></div><canvas id="hySpreadChart"></canvas></section>
       <section class="chart-card chart-card-clickable" onclick="openZoomChart('defaultRate')"><div class="chart-header"><div><h2>미국 투기등급 디폴트율</h2><p>Loan Default Rate TTM / HY Bond Default Rate TTM, 단위: % · 탭하면 확대</p></div></div><canvas id="defaultRateChart"></canvas></section><section class="chart-card chart-card-clickable" onclick="openZoomChart('coreweaveYield')"><div class="chart-header"><div><h2>CoreWeave 회사채 수익률</h2><p>2030-06-01 만기 · 표면금리 9.25% · 일별 수익률(%) · FINRA</p></div></div><canvas id="coreweaveYieldChart"></canvas></section>
+<section class="chart-card chart-card-clickable" id="m2Sp500Card" onclick="openZoomChart('m2Sp500')"><div class="chart-header"><div><h2>미국 M2 증가율 · S&amp;P500</h2><p id="m2Sp500Summary">M2 전년동월비(%) · S&amp;P500(pt) · FRED / Yahoo Finance</p></div></div><div id="m2Sp500Status" role="status">자료 확인 중</div><button id="m2Sp500Retry" class="range-btn" type="button" hidden onclick="event.stopPropagation();loadM2Sp500Data_()">다시 불러오기</button><canvas id="m2Sp500Chart"></canvas></section>
     </main>
 
     <main id="page-macro" class="page">
@@ -2975,7 +2976,7 @@
     const domHtmlCache_ = typeof WeakMap !== 'undefined' ? new WeakMap() : null;
     const chartRenderKeys_ = {};
     const EXPECTED_DASHBOARD_SCHEMA_VERSION = '2026-07-20.1';
-    const LOADED_APP_BUILD_VERSION = "2026-11-13.1";
+    const LOADED_APP_BUILD_VERSION = "2026-11-19.1";
     const APP_DEPLOYMENT_URL = window.location.href;
     const APP_UPDATE_CHECK_INTERVAL_MS = 60 * 1000;
     let latestAppBuildVersion_ = LOADED_APP_BUILD_VERSION;
@@ -9035,6 +9036,8 @@
       const data = filterByRange(fullLiquidityData, liquidityRange);
       renderLiquidityChart(data); renderSpreadChart(data); renderVixMoveChart(filterByRange(fullVixMoveData, liquidityRange)); renderHySpreadChart(filterByRange(fullHySpreadData, liquidityRange)); renderDefaultRateChart(filterByRange(fullDefaultRateData, liquidityRange));
       renderCoreweaveYieldChart(filterByRange(fullCoreweaveYieldData, liquidityRange));
+      renderM2Sp500Chart(filterByRange(fullM2Sp500Data, liquidityRange));
+      initM2Sp500Loader_();
       refreshChartUpdateDates();
     }
 
@@ -9541,6 +9544,92 @@
       return options;
     }
 
+
+    let fullM2Sp500Data = [];
+    let m2Sp500Chart = null;
+    let m2Sp500Loading_ = false;
+    let m2Sp500Observer_ = null;
+    let m2Sp500Meta_ = null;
+
+    function getM2Sp500Datasets(data) {
+      return [
+        { label: 'M2 YoY', data: data.map(row => row.m2Yoy), borderColor: '#22c3ee', backgroundColor: '#22c3ee', borderWidth: 2.4, pointRadius: 0, tension: 0, spanGaps: true, yAxisID: 'yLeft' },
+        { label: 'S&P500', data: data.map(row => row.sp500), borderColor: '#facc15', backgroundColor: '#facc15', borderWidth: 1.8, pointRadius: 0, tension: 0, spanGaps: true, yAxisID: 'yRight' }
+      ];
+    }
+
+    function getM2Sp500Options(zoom) {
+      const options = zoom ? getZoomDualAxisOptions('%', 'pt') : getDualAxisOptions('%', 'pt');
+      options.scales.yLeft.ticks.callback = value => Number(value).toFixed(1) + '%';
+      options.scales.yRight.ticks.callback = value => Number(value).toLocaleString('en-US');
+      options.scales.x.ticks.maxTicksLimit = window.innerWidth < 620 ? 3 : (zoom ? 8 : 5);
+      return options;
+    }
+
+    function renderM2Sp500Chart(data) {
+      data = chartRows_(data);
+      const ctx = getChartContext_('m2Sp500Chart');
+      if (!ctx || !data.length || shouldSkipChartRender_(m2Sp500Chart, 'm2Sp500Chart', data)) return;
+      if (m2Sp500Chart) m2Sp500Chart.destroy();
+      rememberChartRender_('m2Sp500Chart', data);
+      m2Sp500Chart = new Chart(ctx, {
+        type: 'line', data: { labels: data.map(row => row.date), datasets: getM2Sp500Datasets(data) },
+        options: getM2Sp500Options(false)
+      });
+      setChartUpdateDate_('m2Sp500Chart', m2Sp500Meta_ ? m2Sp500Meta_.sp500Date : '');
+    }
+
+    function decodeM2SnapshotValue_(value) {
+      if ('nullValue' in value) return null;
+      if ('stringValue' in value) return value.stringValue;
+      if ('doubleValue' in value) return Number(value.doubleValue);
+      if ('integerValue' in value) return Number(value.integerValue);
+      if (value.arrayValue) return (value.arrayValue.values || []).map(decodeM2SnapshotValue_);
+      if (value.mapValue) return Object.fromEntries(Object.entries(value.mapValue.fields || {}).map(([key, entry]) => [key, decodeM2SnapshotValue_(entry)]));
+      return null;
+    }
+
+    async function loadM2Sp500Data_() {
+      if (m2Sp500Loading_ || fullM2Sp500Data.length || currentPage !== 'liquidity') return;
+      m2Sp500Loading_ = true;
+      const status = document.getElementById('m2Sp500Status');
+      const retry = document.getElementById('m2Sp500Retry');
+      status.textContent = '자료를 불러오는 중입니다.';
+      retry.hidden = true;
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 20000);
+      try {
+        const response = await fetch('https://firestore.googleapis.com/v1/projects/tg-index-webapp-mohano-260914/databases/(default)/documents/snapshots/liquidity-m2-sp500', { signal: controller.signal });
+        if (!response.ok) throw new Error('M2 snapshot HTTP ' + response.status);
+        const raw = await response.json();
+        const payload = decodeM2SnapshotValue_({mapValue: {fields: raw.fields}});
+        if (!payload || !Array.isArray(payload.rows) || !payload.rows.length || !payload.meta) throw new Error('Invalid M2 snapshot');
+        fullM2Sp500Data = payload.rows;
+        m2Sp500Meta_ = payload.meta;
+        status.hidden = true;
+        document.getElementById('m2Sp500Summary').textContent = 'M2 ' + payload.meta.m2Date.slice(0, 7) + ' · S&P500 ' + payload.meta.sp500Date + ' · FRED / Yahoo Finance';
+        if (m2Sp500Observer_) m2Sp500Observer_.disconnect();
+        if (currentPage === 'liquidity') renderM2Sp500Chart(filterByRange(fullM2Sp500Data, liquidityRange));
+      } catch (error) {
+        status.hidden = false;
+        status.textContent = 'M2·S&P500 자료를 불러오지 못했습니다.';
+        retry.hidden = false;
+      } finally {
+        clearTimeout(timeout);
+        m2Sp500Loading_ = false;
+      }
+    }
+
+    function initM2Sp500Loader_() {
+      if (m2Sp500Observer_ || fullM2Sp500Data.length) return;
+      const card = document.getElementById('m2Sp500Card');
+      if (!card) return;
+      if (!('IntersectionObserver' in window)) { loadM2Sp500Data_(); return; }
+      m2Sp500Observer_ = new IntersectionObserver(entries => {
+        if (entries.some(entry => entry.isIntersecting)) loadM2Sp500Data_();
+      }, { rootMargin: '250px' });
+      m2Sp500Observer_.observe(card);
+    }
 
     function getCoreweaveYieldDatasets(data) {
       return [{ label: 'CoreWeave 9.25% 2030 수익률', data: data.map(row => row.yieldPct), borderColor: '#22c3ee', backgroundColor: '#22c3ee', borderWidth: 2.4, pointRadius: 0, tension: 0.18, spanGaps: false }];
@@ -10967,6 +11056,7 @@
         usdjpyRealRateDiff: { title: 'USDJPY vs 미·일 10Y 실질금리차', data: fullUsdjpyRealRateDiffData, type: 'line', datasets: getUsdjpyRealRateDiffDatasets, options: () => getZoomUsdjpyRealRateDiffOptions() },
         defaultRate: { title: '미국 투기등급 디폴트율', data: fullDefaultRateData, type: 'line', datasets: getDefaultRateDatasets, options: () => getZoomSingleAxisOptions({ yTickCallback: value => Number(value).toFixed(1) + '%' }) },
         coreweaveYield: { title: 'CoreWeave 회사채 수익률 · 2030년 만기', data: fullCoreweaveYieldData, type: 'line', datasets: getCoreweaveYieldDatasets, options: () => getCoreweaveYieldOptions(true) },
+        m2Sp500: { title: '미국 M2 증가율 · S&P500', data: fullM2Sp500Data, type: 'line', datasets: getM2Sp500Datasets, options: () => getM2Sp500Options(true) },
         cliExport: { title: 'OECD CLI + 한국 수출 YoY', data: fullEconomicData, type: 'line', datasets: getCliExportDatasets, options: () => getZoomDualAxisOptions('%', '%') },
         ismManufacturing: { title: 'ISM 제조업 PMI 종합', data: fullIsmManufacturingData, type: 'line', datasets: getIsmManufacturingDatasets, options: () => getZoomSingleAxisOptions({ suggestedMin: 30, suggestedMax: 80, yTickCallback: value => Number(value).toFixed(0) }) },
         ismNewOrdersInventory: { title: 'ISM 신규주문 - 재고 스프레드', data: fullIsmManufacturingData, type: 'line', datasets: getIsmNewOrdersInventoryDatasets, options: () => getZoomSingleAxisOptions({ suggestedMin: -20, suggestedMax: 20, yTickCallback: value => Number(value).toFixed(0) }) },
