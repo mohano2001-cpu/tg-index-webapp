@@ -8620,6 +8620,7 @@
     function setInflationRange(range) { inflationRange = range; setActiveRange('.range-btn.inflation', range); renderInflationCharts(); }
 
     function setActiveRange(selector, range) {
+      if (typeof tgResetIndividualSelector_ === 'function') tgResetIndividualSelector_(selector);
       document.querySelectorAll(selector).forEach(btn => btn.classList.toggle('active', String(btn.dataset.range) === String(range)));
     }
 
@@ -12510,7 +12511,7 @@
 .tg-date-range-rail,.tg-date-range-fill{position:absolute;top:19px;height:3px;border-radius:2px;pointer-events:none}
 .tg-date-range-rail{left:0;right:0;background:#354357}.tg-date-range-fill{background:#38bdf8}
 .tg-date-range-track input[type=range]{position:absolute;inset:0;width:100%;height:40px;min-height:0;margin:0;padding:0;border:0;border-radius:0;background:transparent;box-shadow:none;appearance:none;-webkit-appearance:none;pointer-events:none;font-size:16px;cursor:ew-resize}
-.tg-date-range-track input:first-of-type{transform:translateY(-8px)}.tg-date-range-track input:last-of-type{transform:translateY(8px)}
+.tg-date-range-track input:first-of-type{top:-8px;bottom:auto}.tg-date-range-track input:last-of-type{top:8px;bottom:auto}
 .tg-date-range-track input[type=range]::-webkit-slider-runnable-track{height:3px;background:transparent;border:0}
 .tg-date-range-track input[type=range]::-webkit-slider-thumb{appearance:none;-webkit-appearance:none;width:15px;height:20px;margin-top:-9px;border:2px solid #7dd3fc;border-radius:3px;background:#122236;pointer-events:auto;cursor:ew-resize;box-shadow:0 1px 3px #0008}
 .tg-date-range-track input[type=range]::-moz-range-track{height:3px;background:transparent;border:0}
@@ -12686,10 +12687,16 @@ var tgIndividualRangePlugin_={id:'tgIndividualDateRange',beforeInit:function(cha
   state.mountQueued=true;queueMicrotask(function(){state.mountQueued=false;tgRangeMount_(state);});
 },afterDestroy:function(chart){if(chart.$tgIndividualRange?.chart===chart)chart.$tgIndividualRange.chart=null;}};
 if(typeof Chart!=='undefined')Chart.register(tgIndividualRangePlugin_);
+function tgResetIndividualPage_(page) {
+  if(!page)return;
+  tgIndividualRanges_.forEach(function(state,id){if(state.chart&&(page.contains(state.chart.canvas)||(page.id==='page-korea'&&state.chart.canvas.closest('#koreaCycleCard')))){state.range=null;if(typeof chartRenderKeys_!=='undefined')delete chartRenderKeys_[id];}});
+}
+function tgResetIndividualSelector_(selector) {tgResetIndividualPage_(document.querySelector(selector)?.closest('.page'));}
 document.addEventListener('click',function(event){
   var button=event.target.closest?.('button[data-range],button[data-cycle-range]');if(!button)return;
   var page=button.closest('.page'), cycle=button.closest('#koreaCycleCard');if(!page&&!cycle)return;
-  tgIndividualRanges_.forEach(function(state,id){if(state.chart&&(page?.contains(state.chart.canvas)||cycle?.contains(state.chart.canvas))){state.range=null;if(typeof chartRenderKeys_!=='undefined')delete chartRenderKeys_[id];}});
+  if(page)tgResetIndividualPage_(page);
+  else tgIndividualRanges_.forEach(function(state,id){if(state.chart&&cycle?.contains(state.chart.canvas)){state.range=null;if(typeof chartRenderKeys_!=='undefined')delete chartRenderKeys_[id];}});
 },true);
 </script>
 
