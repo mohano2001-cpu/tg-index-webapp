@@ -1529,7 +1529,7 @@
 
 <style id="tg-export-status-cards-v4">#page-exportStats .export-status-card{--export-tone:#73b7ff;--export-tone-rgb:115, 183, 255;border-top-color:rgba(var(--export-tone-rgb), .52)!important;background:linear-gradient(180deg, rgba(var(--export-tone-rgb), .075) 0, rgba(var(--export-tone-rgb), .018) 58px, transparent 112px), linear-gradient(180deg, #121e2e, #0b1421)!important;min-width:0!important;position:relative!important;box-shadow:0 12px 24px #0000002e,inset 0 1px #ffffff0e!important}#page-exportStats .export-status-card:before{content:"";z-index:2;background:linear-gradient(90deg, transparent, var(--export-tone) 18%, var(--export-tone) 82%, transparent);height:2px;box-shadow:0 0 12px rgba(var(--export-tone-rgb), .38);pointer-events:none;border-radius:0 0 999px 999px;position:absolute;top:0;left:12px;right:12px}#page-exportStats .tone-base{--export-tone:#9d8cff;--export-tone-rgb:157,140,255}#page-exportStats .tone-accelerating{--export-tone:#36d7b7;--export-tone-rgb:54,215,183}#page-exportStats .tone-weak{--export-tone:#ff6681;--export-tone-rgb:255,102,129}#page-exportStats .tone-slowing{--export-tone:#f7bd45;--export-tone-rgb:247,189,69}#page-exportStats .tone-recovering{--export-tone:#61adff;--export-tone-rgb:97,173,255}#page-exportStats .export-status-title{color:#eef5fc!important;min-width:0!important;text-shadow:none!important}#page-exportStats .export-status-title>span{text-overflow:ellipsis!important;white-space:nowrap!important;min-width:0!important;overflow:hidden!important}#page-exportStats .export-status-title>em{border-color:rgba(var(--export-tone-rgb), .28)!important;background:rgba(var(--export-tone-rgb), .12)!important;color:var(--export-tone)!important;flex:none!important;box-shadow:inset 0 1px #ffffff0e!important}#page-exportStats .export-status-chip-list{min-width:0!important;overflow-x:hidden!important}#page-exportStats .export-status-chip{box-sizing:border-box!important;background:linear-gradient(#182537f5,#101a29f5)!important;border-color:#7e9dc12e!important;align-items:center!important;min-width:0!important;max-width:100%!important;height:auto!important;min-height:44px!important;overflow:hidden!important}#page-exportStats .export-status-chip:hover,#page-exportStats .export-status-chip:focus-visible{border-color:rgba(var(--export-tone-rgb), .5)!important;background:linear-gradient(180deg, rgba(var(--export-tone-rgb), .12), #101a29f5)!important}#page-exportStats .export-status-chip.active{border-color:rgba(var(--export-tone-rgb), .68)!important;box-shadow:0 0 0 2px rgba(var(--export-tone-rgb), .1), inset 0 1px 0 #ffffff0e!important}#page-exportStats .export-status-item{flex:1 1 0!important;min-width:0!important;max-width:100%!important;overflow:hidden!important}#page-exportStats .export-status-item>strong,#page-exportStats .export-status-company{box-sizing:border-box!important;text-overflow:ellipsis!important;white-space:nowrap!important;width:100%!important;min-width:0!important;max-width:100%!important;display:block!important;overflow:hidden!important}#page-exportStats .export-status-item>strong{color:#f4f8fc!important;font-size:12px!important;line-height:1.2!important}#page-exportStats .export-status-company{color:#91a4ba!important;font-size:9px!important;line-height:1.2!important}#page-exportStats .export-status-numbers{flex:none!important;min-width:0!important;max-width:42%!important;overflow:hidden!important}#page-exportStats .export-status-numbers>b,#page-exportStats .export-status-numbers>small{text-overflow:ellipsis!important;white-space:nowrap!important;max-width:100%!important;display:block!important;overflow:hidden!important}</style>
 
-<script>window.TG_EXACT_BUILD_VERSION="2026-11-19.1";</script>
+<script>window.TG_EXACT_BUILD_VERSION="2026-11-20.1";</script>
   <script type="module" crossorigin src="/tg-index-webapp/assets/exact-DSytui7y.js"></script>
 </head>
 
@@ -1658,6 +1658,7 @@
       <section class="chart-card chart-card-clickable" onclick="openZoomChart('sectoralBalance')"><div class="chart-header"><div><h2>US Sectoral Balances</h2><p>민간 / 정부 / 해외부문, 단위: GDP 대비 % · 탭하면 확대</p></div></div><canvas id="sectoralBalanceChart"></canvas></section>
       <section class="chart-card chart-card-clickable" onclick="openZoomChart('laborProductivity')"><div class="chart-header"><div><h2>미국 노동생산성</h2><p>노동생산성 YoY(%) / 노동생산성 지수 · 탭하면 확대</p></div></div><canvas id="laborProductivityChart"></canvas></section>
       <section class="chart-card chart-card-clickable" onclick="openZoomChart('employmentSurvey')"><div class="chart-header"><div><h2>미국 비농업 고용건수: 가계조사 vs 기업조사</h2><p>좌측축: 가계조사(억명) 1.58~1.645 / 우측축: 기업조사(억명) 1.51~1.59 · 탭하면 확대</p></div></div><canvas id="employmentSurveyChart"></canvas></section>
+<section class="chart-card chart-card-clickable" id="unemploymentCard" onclick="openZoomChart('unemployment')"><div class="chart-header"><div><h2>미국 실업률</h2><p id="unemploymentSummary">U-3 · 계절조정 · 월간(%) · BLS / FRED</p></div></div><div id="unemploymentStatus" role="status">자료 확인 중</div><button id="unemploymentRetry" class="range-btn" type="button" hidden onclick="event.stopPropagation();loadUnemploymentData_()">다시 불러오기</button><canvas id="unemploymentChart"></canvas></section>
     </main>
 
     <main id="page-economic" class="page">
@@ -2976,7 +2977,7 @@
     const domHtmlCache_ = typeof WeakMap !== 'undefined' ? new WeakMap() : null;
     const chartRenderKeys_ = {};
     const EXPECTED_DASHBOARD_SCHEMA_VERSION = '2026-07-20.1';
-    const LOADED_APP_BUILD_VERSION = "2026-11-19.1";
+    const LOADED_APP_BUILD_VERSION = "2026-11-20.1";
     const APP_DEPLOYMENT_URL = window.location.href;
     const APP_UPDATE_CHECK_INTERVAL_MS = 60 * 1000;
     let latestAppBuildVersion_ = LOADED_APP_BUILD_VERSION;
@@ -9046,6 +9047,8 @@
       renderSectoralBalanceChart(filterByRange(fullMacroData, macroRange));
       renderLaborProductivityChart(filterByRange(fullLaborProductivityData, macroRange));
       renderEmploymentSurveyChart(filterByRange(fullEmploymentSurveyData, macroRange));
+      renderUnemploymentChart(filterByRange(fullUnemploymentData, macroRange));
+      initUnemploymentLoader_();
       refreshChartUpdateDates();
 
     }
@@ -9392,6 +9395,83 @@
       ];
     }
 
+
+    let fullUnemploymentData = [];
+    let unemploymentChart = null;
+    let unemploymentLoading_ = false;
+    let unemploymentObserver_ = null;
+    let unemploymentMeta_ = null;
+
+    function getUnemploymentDatasets(data) {
+      return [
+        { label: '미국 실업률', data: data.map(row => row.unemploymentRate), borderColor: '#22c3ee', backgroundColor: '#22c3ee', borderWidth: 2.4, pointRadius: 0, tension: 0, spanGaps: false },
+        { label: '3.5% 기준선', data: data.map(() => 3.5), borderColor: '#ff285c', backgroundColor: '#ff285c', borderWidth: 1.5, pointRadius: 0, tension: 0, fill: false }
+      ];
+    }
+
+    function getUnemploymentOptions(zoom) {
+      const extra = { suggestedMin: 3, yTickCallback: value => Number(value).toFixed(1) + '%' };
+      const options = zoom ? getZoomSingleAxisOptions(extra) : getSingleAxisOptions(extra);
+      options.scales.x.ticks.maxTicksLimit = window.innerWidth < 620 ? 3 : (zoom ? 8 : 5);
+      options.scales.y.title = { display: true, text: '%', color: '#9ca3af' };
+      return options;
+    }
+
+    function renderUnemploymentChart(data) {
+      data = chartRows_(data);
+      const ctx = getChartContext_('unemploymentChart');
+      if (!ctx || !data.length || shouldSkipChartRender_(unemploymentChart, 'unemploymentChart', data)) return;
+      if (unemploymentChart) unemploymentChart.destroy();
+      rememberChartRender_('unemploymentChart', data);
+      unemploymentChart = new Chart(ctx, {
+        type: 'line', data: { labels: data.map(row => row.date), datasets: getUnemploymentDatasets(data) },
+        options: getUnemploymentOptions(false)
+      });
+      setChartUpdateDate_('unemploymentChart', unemploymentMeta_ ? unemploymentMeta_.latestDate : '');
+    }
+
+    async function loadUnemploymentData_() {
+      if (unemploymentLoading_ || fullUnemploymentData.length || currentPage !== 'macro') return;
+      unemploymentLoading_ = true;
+      const status = document.getElementById('unemploymentStatus');
+      const retry = document.getElementById('unemploymentRetry');
+      status.hidden = false;
+      status.textContent = '자료를 불러오는 중입니다.';
+      retry.hidden = true;
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 20000);
+      try {
+        const response = await fetch('https://firestore.googleapis.com/v1/projects/tg-index-webapp-mohano-260914/databases/(default)/documents/snapshots/macro-unemployment', { signal: controller.signal });
+        if (!response.ok) throw new Error('Unemployment snapshot HTTP ' + response.status);
+        const raw = await response.json();
+        const payload = decodeM2SnapshotValue_({mapValue: {fields: raw.fields}});
+        if (!payload || payload.schemaVersion !== 1 || !Array.isArray(payload.rows) || !payload.rows.length || !payload.meta) throw new Error('Invalid unemployment snapshot');
+        fullUnemploymentData = payload.rows;
+        unemploymentMeta_ = payload.meta;
+        status.hidden = true;
+        document.getElementById('unemploymentSummary').textContent = 'U-3 · 계절조정 · 월간(%) · BLS / FRED';
+        if (unemploymentObserver_) unemploymentObserver_.disconnect();
+        if (currentPage === 'macro') renderUnemploymentChart(filterByRange(fullUnemploymentData, macroRange));
+      } catch (error) {
+        status.hidden = false;
+        status.textContent = '미국 실업률 자료를 불러오지 못했습니다.';
+        retry.hidden = false;
+      } finally {
+        clearTimeout(timeout);
+        unemploymentLoading_ = false;
+      }
+    }
+
+    function initUnemploymentLoader_() {
+      if (unemploymentObserver_ || fullUnemploymentData.length) return;
+      const card = document.getElementById('unemploymentCard');
+      if (!card) return;
+      if (!('IntersectionObserver' in window)) { loadUnemploymentData_(); return; }
+      unemploymentObserver_ = new IntersectionObserver(entries => {
+        if (entries.some(entry => entry.isIntersecting)) loadUnemploymentData_();
+      }, { rootMargin: '250px' });
+      unemploymentObserver_.observe(card);
+    }
 
     function renderLaborProductivityChart(data) {
       data = chartRows_(data);
@@ -11052,6 +11132,7 @@
         sectoralBalance: { title: 'US Sectoral Balances', data: fullMacroData, type: 'bar', datasets: getSectoralBalanceDatasets, options: () => getZoomSingleAxisOptions({ yTickCallback: value => Number(value).toFixed(1) + '%' }) },
         laborProductivity: { title: '미국 노동생산성', data: fullLaborProductivityData, type: 'line', datasets: getLaborProductivityDatasets, options: () => getZoomDualAxisOptions('%', 'Index') },
         employmentSurvey: { title: '미국 비농업 고용건수: 가계조사 vs 기업조사', data: fullEmploymentSurveyData, type: 'line', datasets: getEmploymentSurveyDatasets, options: () => getEmploymentSurveyChartOptions() },
+        unemployment: { title: '미국 실업률', data: fullUnemploymentData, type: 'line', datasets: getUnemploymentDatasets, options: () => getUnemploymentOptions(true) },
         rateDecomposition: { title: '미국 10년 금리분해', data: fullRateDecompositionData, type: 'line', datasets: getRateDecompositionDatasets, options: () => getZoomDualAxisOptions('%', '%') },
         usdjpyRealRateDiff: { title: 'USDJPY vs 미·일 10Y 실질금리차', data: fullUsdjpyRealRateDiffData, type: 'line', datasets: getUsdjpyRealRateDiffDatasets, options: () => getZoomUsdjpyRealRateDiffOptions() },
         defaultRate: { title: '미국 투기등급 디폴트율', data: fullDefaultRateData, type: 'line', datasets: getDefaultRateDatasets, options: () => getZoomSingleAxisOptions({ yTickCallback: value => Number(value).toFixed(1) + '%' }) },
