@@ -1529,7 +1529,7 @@
 
 <style id="tg-export-status-cards-v4">#page-exportStats .export-status-card{--export-tone:#73b7ff;--export-tone-rgb:115, 183, 255;border-top-color:rgba(var(--export-tone-rgb), .52)!important;background:linear-gradient(180deg, rgba(var(--export-tone-rgb), .075) 0, rgba(var(--export-tone-rgb), .018) 58px, transparent 112px), linear-gradient(180deg, #121e2e, #0b1421)!important;min-width:0!important;position:relative!important;box-shadow:0 12px 24px #0000002e,inset 0 1px #ffffff0e!important}#page-exportStats .export-status-card:before{content:"";z-index:2;background:linear-gradient(90deg, transparent, var(--export-tone) 18%, var(--export-tone) 82%, transparent);height:2px;box-shadow:0 0 12px rgba(var(--export-tone-rgb), .38);pointer-events:none;border-radius:0 0 999px 999px;position:absolute;top:0;left:12px;right:12px}#page-exportStats .tone-base{--export-tone:#9d8cff;--export-tone-rgb:157,140,255}#page-exportStats .tone-accelerating{--export-tone:#36d7b7;--export-tone-rgb:54,215,183}#page-exportStats .tone-weak{--export-tone:#ff6681;--export-tone-rgb:255,102,129}#page-exportStats .tone-slowing{--export-tone:#f7bd45;--export-tone-rgb:247,189,69}#page-exportStats .tone-recovering{--export-tone:#61adff;--export-tone-rgb:97,173,255}#page-exportStats .export-status-title{color:#eef5fc!important;min-width:0!important;text-shadow:none!important}#page-exportStats .export-status-title>span{text-overflow:ellipsis!important;white-space:nowrap!important;min-width:0!important;overflow:hidden!important}#page-exportStats .export-status-title>em{border-color:rgba(var(--export-tone-rgb), .28)!important;background:rgba(var(--export-tone-rgb), .12)!important;color:var(--export-tone)!important;flex:none!important;box-shadow:inset 0 1px #ffffff0e!important}#page-exportStats .export-status-chip-list{min-width:0!important;overflow-x:hidden!important}#page-exportStats .export-status-chip{box-sizing:border-box!important;background:linear-gradient(#182537f5,#101a29f5)!important;border-color:#7e9dc12e!important;align-items:center!important;min-width:0!important;max-width:100%!important;height:auto!important;min-height:44px!important;overflow:hidden!important}#page-exportStats .export-status-chip:hover,#page-exportStats .export-status-chip:focus-visible{border-color:rgba(var(--export-tone-rgb), .5)!important;background:linear-gradient(180deg, rgba(var(--export-tone-rgb), .12), #101a29f5)!important}#page-exportStats .export-status-chip.active{border-color:rgba(var(--export-tone-rgb), .68)!important;box-shadow:0 0 0 2px rgba(var(--export-tone-rgb), .1), inset 0 1px 0 #ffffff0e!important}#page-exportStats .export-status-item{flex:1 1 0!important;min-width:0!important;max-width:100%!important;overflow:hidden!important}#page-exportStats .export-status-item>strong,#page-exportStats .export-status-company{box-sizing:border-box!important;text-overflow:ellipsis!important;white-space:nowrap!important;width:100%!important;min-width:0!important;max-width:100%!important;display:block!important;overflow:hidden!important}#page-exportStats .export-status-item>strong{color:#f4f8fc!important;font-size:12px!important;line-height:1.2!important}#page-exportStats .export-status-company{color:#91a4ba!important;font-size:9px!important;line-height:1.2!important}#page-exportStats .export-status-numbers{flex:none!important;min-width:0!important;max-width:42%!important;overflow:hidden!important}#page-exportStats .export-status-numbers>b,#page-exportStats .export-status-numbers>small{text-overflow:ellipsis!important;white-space:nowrap!important;max-width:100%!important;display:block!important;overflow:hidden!important}</style>
 
-<script>window.TG_EXACT_BUILD_VERSION="2026-11-20.1";</script>
+<script>window.TG_EXACT_BUILD_VERSION="2026-11-20.2";</script>
   <script type="module" crossorigin src="/tg-index-webapp/assets/exact-DSytui7y.js"></script>
 </head>
 
@@ -1657,7 +1657,7 @@
       <section class="chart-card chart-card-clickable" onclick="openZoomChart('fearGreed')"><div class="chart-header"><div><h2>Fear &amp; Greed Index</h2><p>단위: 0~100 · 탭하면 확대</p></div></div><canvas id="fearGreedChart"></canvas></section>
       <section class="chart-card chart-card-clickable" onclick="openZoomChart('sectoralBalance')"><div class="chart-header"><div><h2>US Sectoral Balances</h2><p>민간 / 정부 / 해외부문, 단위: GDP 대비 % · 탭하면 확대</p></div></div><canvas id="sectoralBalanceChart"></canvas></section>
       <section class="chart-card chart-card-clickable" onclick="openZoomChart('laborProductivity')"><div class="chart-header"><div><h2>미국 노동생산성</h2><p>노동생산성 YoY(%) / 노동생산성 지수 · 탭하면 확대</p></div></div><canvas id="laborProductivityChart"></canvas></section>
-      <section class="chart-card chart-card-clickable" onclick="openZoomChart('employmentSurvey')"><div class="chart-header"><div><h2>미국 비농업 고용건수: 가계조사 vs 기업조사</h2><p>좌측축: 가계조사(억명) 1.58~1.645 / 우측축: 기업조사(억명) 1.51~1.59 · 탭하면 확대</p></div></div><canvas id="employmentSurveyChart"></canvas></section>
+      <section class="chart-card chart-card-clickable" onclick="openZoomChart('employmentSurvey')"><div class="chart-header"><div><h2>미국 비농업 고용건수: 가계조사 vs 기업조사</h2><p>좌측축: 가계조사(억명) / 우측축: 기업조사(억명) · 탭하면 확대</p></div></div><canvas id="employmentSurveyChart"></canvas></section>
 <section class="chart-card chart-card-clickable" id="unemploymentCard" onclick="openZoomChart('unemployment')"><div class="chart-header"><div><h2>미국 실업률</h2><p id="unemploymentSummary">U-3 · 계절조정 · 월간(%) · BLS / FRED</p></div></div><div id="unemploymentStatus" role="status">자료 확인 중</div><button id="unemploymentRetry" class="range-btn" type="button" hidden onclick="event.stopPropagation();loadUnemploymentData_()">다시 불러오기</button><canvas id="unemploymentChart"></canvas></section>
     </main>
 
@@ -2977,7 +2977,7 @@
     const domHtmlCache_ = typeof WeakMap !== 'undefined' ? new WeakMap() : null;
     const chartRenderKeys_ = {};
     const EXPECTED_DASHBOARD_SCHEMA_VERSION = '2026-07-20.1';
-    const LOADED_APP_BUILD_VERSION = "2026-11-20.1";
+    const LOADED_APP_BUILD_VERSION = "2026-11-20.2";
     const APP_DEPLOYMENT_URL = window.location.href;
     const APP_UPDATE_CHECK_INTERVAL_MS = 60 * 1000;
     let latestAppBuildVersion_ = LOADED_APP_BUILD_VERSION;
@@ -9563,13 +9563,13 @@
       if (options.scales.yLeft) {
         options.scales.yLeft.title = { display: true, text: '가계조사(억명)' };
         options.scales.yLeft.min = 1.58;
-        options.scales.yLeft.max = 1.645;
+
         options.scales.yLeft.ticks = Object.assign({}, options.scales.yLeft.ticks || {}, { callback: value => Number(value).toFixed(3) });
       }
       if (options.scales.yRight) {
         options.scales.yRight.title = { display: true, text: '기업조사(억명)' };
         options.scales.yRight.min = 1.51;
-        options.scales.yRight.max = 1.59;
+
         options.scales.yRight.ticks = Object.assign({}, options.scales.yRight.ticks || {}, { callback: value => Number(value).toFixed(2) });
       }
       return options;
