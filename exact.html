@@ -1529,7 +1529,7 @@
 
 <style id="tg-export-status-cards-v4">#page-exportStats .export-status-card{--export-tone:#73b7ff;--export-tone-rgb:115, 183, 255;border-top-color:rgba(var(--export-tone-rgb), .52)!important;background:linear-gradient(180deg, rgba(var(--export-tone-rgb), .075) 0, rgba(var(--export-tone-rgb), .018) 58px, transparent 112px), linear-gradient(180deg, #121e2e, #0b1421)!important;min-width:0!important;position:relative!important;box-shadow:0 12px 24px #0000002e,inset 0 1px #ffffff0e!important}#page-exportStats .export-status-card:before{content:"";z-index:2;background:linear-gradient(90deg, transparent, var(--export-tone) 18%, var(--export-tone) 82%, transparent);height:2px;box-shadow:0 0 12px rgba(var(--export-tone-rgb), .38);pointer-events:none;border-radius:0 0 999px 999px;position:absolute;top:0;left:12px;right:12px}#page-exportStats .tone-base{--export-tone:#9d8cff;--export-tone-rgb:157,140,255}#page-exportStats .tone-accelerating{--export-tone:#36d7b7;--export-tone-rgb:54,215,183}#page-exportStats .tone-weak{--export-tone:#ff6681;--export-tone-rgb:255,102,129}#page-exportStats .tone-slowing{--export-tone:#f7bd45;--export-tone-rgb:247,189,69}#page-exportStats .tone-recovering{--export-tone:#61adff;--export-tone-rgb:97,173,255}#page-exportStats .export-status-title{color:#eef5fc!important;min-width:0!important;text-shadow:none!important}#page-exportStats .export-status-title>span{text-overflow:ellipsis!important;white-space:nowrap!important;min-width:0!important;overflow:hidden!important}#page-exportStats .export-status-title>em{border-color:rgba(var(--export-tone-rgb), .28)!important;background:rgba(var(--export-tone-rgb), .12)!important;color:var(--export-tone)!important;flex:none!important;box-shadow:inset 0 1px #ffffff0e!important}#page-exportStats .export-status-chip-list{min-width:0!important;overflow-x:hidden!important}#page-exportStats .export-status-chip{box-sizing:border-box!important;background:linear-gradient(#182537f5,#101a29f5)!important;border-color:#7e9dc12e!important;align-items:center!important;min-width:0!important;max-width:100%!important;height:auto!important;min-height:44px!important;overflow:hidden!important}#page-exportStats .export-status-chip:hover,#page-exportStats .export-status-chip:focus-visible{border-color:rgba(var(--export-tone-rgb), .5)!important;background:linear-gradient(180deg, rgba(var(--export-tone-rgb), .12), #101a29f5)!important}#page-exportStats .export-status-chip.active{border-color:rgba(var(--export-tone-rgb), .68)!important;box-shadow:0 0 0 2px rgba(var(--export-tone-rgb), .1), inset 0 1px 0 #ffffff0e!important}#page-exportStats .export-status-item{flex:1 1 0!important;min-width:0!important;max-width:100%!important;overflow:hidden!important}#page-exportStats .export-status-item>strong,#page-exportStats .export-status-company{box-sizing:border-box!important;text-overflow:ellipsis!important;white-space:nowrap!important;width:100%!important;min-width:0!important;max-width:100%!important;display:block!important;overflow:hidden!important}#page-exportStats .export-status-item>strong{color:#f4f8fc!important;font-size:12px!important;line-height:1.2!important}#page-exportStats .export-status-company{color:#91a4ba!important;font-size:9px!important;line-height:1.2!important}#page-exportStats .export-status-numbers{flex:none!important;min-width:0!important;max-width:42%!important;overflow:hidden!important}#page-exportStats .export-status-numbers>b,#page-exportStats .export-status-numbers>small{text-overflow:ellipsis!important;white-space:nowrap!important;max-width:100%!important;display:block!important;overflow:hidden!important}</style>
 
-<script>window.TG_EXACT_BUILD_VERSION="2026-11-20.2";</script>
+<script>window.TG_EXACT_BUILD_VERSION="2026-11-20.3";</script>
   <script type="module" crossorigin src="/tg-index-webapp/assets/exact-DSytui7y.js"></script>
 </head>
 
@@ -1846,7 +1846,7 @@
   }
   function markRange(){document.querySelectorAll('[data-cycle-range]').forEach(function(b){b.classList.toggle('active',b.dataset.cycleRange===String(state.range));});}
   function syncRange(){var range=typeof koreaRange!=='undefined'?koreaRange:365;if(state.range!==range){state.range=range;markRange();render();}}
-  window.TGKoreaCycle={setRange:function(range){if(['all',365,1095,1825,3650].indexOf(range)<0)return;state.range=range;if(typeof setKoreaRange==='function'&&typeof koreaRange!=='undefined'&&koreaRange!==range)setKoreaRange(range);markRange();render();},retry:function(){state.error=false;load();},expand:function(){
+  window.TGKoreaCycle={getRangeSource:function(){return state.data;},setRange:function(range){if(['all',365,1095,1825,3650].indexOf(range)<0)return;state.range=range;if(typeof setKoreaRange==='function'&&typeof koreaRange!=='undefined'&&koreaRange!==range)setKoreaRange(range);markRange();render();},retry:function(){state.error=false;load();},expand:function(){
     var card=document.getElementById('koreaCycleCard'),expanded=card.classList.toggle('is-expanded');
     if(expanded){state.overflow=document.body.style.overflow;document.body.style.overflow='hidden';state.slot=document.createComment('cycle-comparison-slot');card.parentNode.insertBefore(state.slot,card);document.body.appendChild(card);card.setAttribute('role','dialog');card.setAttribute('aria-modal','true');}
     else {document.body.style.overflow=state.overflow;if(state.slot)state.slot.replaceWith(card);card.removeAttribute('role');card.removeAttribute('aria-modal');}
@@ -2977,7 +2977,7 @@
     const domHtmlCache_ = typeof WeakMap !== 'undefined' ? new WeakMap() : null;
     const chartRenderKeys_ = {};
     const EXPECTED_DASHBOARD_SCHEMA_VERSION = '2026-07-20.1';
-    const LOADED_APP_BUILD_VERSION = "2026-11-20.2";
+    const LOADED_APP_BUILD_VERSION = "2026-11-20.3";
     const APP_DEPLOYMENT_URL = window.location.href;
     const APP_UPDATE_CHECK_INTERVAL_MS = 60 * 1000;
     let latestAppBuildVersion_ = LOADED_APP_BUILD_VERSION;
@@ -4955,8 +4955,8 @@
     function renderExportMonthlyChart_(rows, reportingMonth) {
       exportMonthlyChart = destroyExportChart_(exportMonthlyChart);
       const ctx = getChartContext_('exportMonthlyChart');
-      const recent = (rows || []).slice(-24);
-      const missingMonth = reportingMonth && recent.length && recent[recent.length - 1].month < reportingMonth ? reportingMonth : '';
+      const recent = tgIndividualExportRows_('exportMonthlyChart', rows || [], 24);
+      const missingMonth = !tgIndividualRangeActive_('exportMonthlyChart') && reportingMonth && recent.length && recent[recent.length - 1].month < reportingMonth ? reportingMonth : '';
       if (missingMonth) recent.push({month: missingMonth, label: missingMonth + ' (자료 미집계)', dailyAvgUsd: null, yoyPct: null, partial: false});
       if (!ctx || !recent.length) return;
       const extremeYoy = recent.filter(function(row) { return typeof row.yoyPct === 'number' && Math.abs(row.yoyPct) > 1000; }).sort(function(a, b) { return Math.abs(b.yoyPct) - Math.abs(a.yoyPct); })[0];
@@ -4975,6 +4975,7 @@
     }
 
     function renderExportQuarterlyChart_(rows) {
+      rows = tgIndividualExportRows_('exportQuarterlyChart', rows);
       exportQuarterlyChart = destroyExportChart_(exportQuarterlyChart);
       const ctx = getChartContext_('exportQuarterlyChart');
       if (!ctx || !rows.length) return;
@@ -4994,7 +4995,7 @@
     function renderExportPriceVolumeChart_(rows) {
       exportPriceVolumeChart = destroyExportChart_(exportPriceVolumeChart);
       const ctx = getChartContext_('exportPriceVolumeChart');
-      const recent = (rows || []).slice(-24);
+      const recent = tgIndividualExportRows_('exportPriceVolumeChart', rows || [], 24);
       if (!ctx || !recent.length) return;
       exportPriceVolumeChart = new Chart(ctx, {
         type: 'line',
@@ -8619,6 +8620,7 @@
     function setInflationRange(range) { inflationRange = range; setActiveRange('.range-btn.inflation', range); renderInflationCharts(); }
 
     function setActiveRange(selector, range) {
+      if (typeof tgResetIndividualSelector_ === 'function') tgResetIndividualSelector_(selector);
       document.querySelectorAll(selector).forEach(btn => btn.classList.toggle('active', String(btn.dataset.range) === String(range)));
     }
 
@@ -11124,7 +11126,7 @@
       return { min, max, minPositive: isFinite(minPositive) ? minPositive : null };
     }
 
-    function getZoomChartConfig(chartKey) {
+    function getZoomChartConfig(chartKey, ignoreIndividualRange) {
       const map = {
         liquidityMain: { title: '지급준비금 · RRP · TGA', data: fullLiquidityData, type: 'line', datasets: getLiquidityDatasets, options: () => getZoomDualAxisOptions('조', '조') },
         spread: { title: 'SOFR - IORB 스프레드', data: fullLiquidityData, type: 'line', datasets: getSpreadDatasets, options: () => getZoomSingleAxisOptions({ suggestedMin: -0.25, suggestedMax: 0.25, yTickCallback: value => Number(value).toFixed(2) }) },
@@ -11187,7 +11189,8 @@
       if (!item) return null;
       const data = chartRows_(item.data);
 
-      return { title: item.title, subtitle: '전체 기간 기준 · 좌우 드래그 · 핀치 확대/축소', type: item.type, labels: data.map(row => row[item.labelsKey || 'date']), datasets: item.datasets(data), options: item.options(), plugins: item.plugins || [] };
+      const config = { title: item.title, subtitle: '전체 기간 기준 · 좌우 드래그 · 핀치 확대/축소', type: item.type, labels: data.map(row => row[item.labelsKey || 'date']), datasets: item.datasets(data), options: item.options(), plugins: item.plugins || [] };
+      return !ignoreIndividualRange && typeof tgIndividualZoomConfig_ === 'function' ? tgIndividualZoomConfig_(chartKey, config) : config;
     }
 
 
@@ -12501,5 +12504,201 @@
     installMobileTabResidueFix();
 
 </script>
+<!-- tg-individual-date-range-v1 -->
+<style>
+.tg-date-range-control{display:inline-grid;grid-template-columns:minmax(150px,210px) 24px;gap:6px;align-items:center;max-width:100%;margin:6px 0 0 10px;vertical-align:middle;line-height:1.2}
+.tg-date-range-track{position:relative;height:40px;min-width:150px;touch-action:pan-y}
+.tg-date-range-rail,.tg-date-range-fill{position:absolute;top:19px;height:3px;border-radius:2px;pointer-events:none}
+.tg-date-range-rail{left:0;right:0;background:#354357}.tg-date-range-fill{background:#38bdf8}
+.tg-date-range-track input[type=range]{position:absolute;inset:0;width:100%;height:40px;min-height:0;margin:0;padding:0;border:0;border-radius:0;background:transparent;box-shadow:none;appearance:none;-webkit-appearance:none;pointer-events:none;font-size:16px;cursor:ew-resize}
+.tg-date-range-track input:first-of-type{top:-8px;bottom:auto}.tg-date-range-track input:last-of-type{top:8px;bottom:auto}
+.tg-date-range-track input[type=range]::-webkit-slider-runnable-track{height:3px;background:transparent;border:0}
+.tg-date-range-track input[type=range]::-webkit-slider-thumb{appearance:none;-webkit-appearance:none;width:15px;height:20px;margin-top:-9px;border:2px solid #7dd3fc;border-radius:3px;background:#122236;pointer-events:auto;cursor:ew-resize;box-shadow:0 1px 3px #0008}
+.tg-date-range-track input[type=range]::-moz-range-track{height:3px;background:transparent;border:0}
+.tg-date-range-track input[type=range]::-moz-range-thumb{width:12px;height:18px;border:2px solid #7dd3fc;border-radius:3px;background:#122236;pointer-events:auto;cursor:ew-resize}
+.tg-date-range-track input[type=range]:focus-visible{outline:0}.tg-date-range-track input[type=range]:focus-visible::-webkit-slider-thumb{outline:2px solid #f8fafc;outline-offset:2px}
+.tg-date-range-control .tg-date-range-reset{width:24px;height:24px;min-width:24px;min-height:24px;padding:0;border:1px solid #354357;border-radius:5px;background:#101b2a;color:#cbd5e1;font:16px/1 sans-serif;cursor:pointer;box-shadow:none}
+.tg-date-range-control .tg-date-range-reset:hover{border-color:#7dd3fc;color:#f8fafc}
+.tg-date-range-dates{grid-column:1/-1;display:flex;justify-content:space-between;gap:8px;color:#9aaac0;font-size:10px;font-weight:600;white-space:nowrap;letter-spacing:0}
+.tg-date-range-control input:disabled{opacity:.4}
+.export-chart-heading:has(>.tg-date-range-control){flex-wrap:wrap}
+@media(max-width:620px){.tg-date-range-control{margin-left:0;margin-right:8px;grid-template-columns:minmax(150px,210px) 28px}.tg-date-range-track input[type=range]::-webkit-slider-thumb{width:18px;height:24px;margin-top:-11px}.tg-date-range-control .tg-date-range-reset{width:28px;height:28px}}
+</style>
+<script>
+var tgIndividualRanges_ = new Map();
+
+function tgRangeDate_(value) {
+  var text=String(value==null?'':value), q=text.match(/^(\d{4})[ -]?Q([1-4])(?:\b|\s|\()/);
+  if(q)return q[1]+'-'+String((Number(q[2])-1)*3+1).padStart(2,'0')+'-01';
+  var m=text.match(/^(\d{4})[-/.](\d{1,2})(?:[-/.](\d{1,2}))?/);
+  return m?m[1]+'-'+m[2].padStart(2,'0')+'-'+String(m[3]||'01').padStart(2,'0'):'';
+}
+function tgRangeCloneData_(data) {
+  return {labels:(data.labels||[]).slice(),datasets:(data.datasets||[]).map(function(ds){var out=Object.assign({},ds);Object.keys(out).forEach(function(k){if(Array.isArray(out[k]))out[k]=out[k].slice();});return out;})};
+}
+function tgRangeSlice_(data,first,last) {
+  var count=data.labels.length;
+  return {labels:data.labels.slice(first,last+1),datasets:data.datasets.map(function(ds){var out=Object.assign({},ds);Object.keys(out).forEach(function(k){if(Array.isArray(out[k])&&out[k].length===count)out[k]=out[k].slice(first,last+1);});return out;})};
+}
+function tgRangeBounds_(dates,range) {
+  var first=0,last=dates.length-1;
+  if(range){
+    first=dates.findIndex(function(d){return d>=range.start;});if(first<0)first=last;
+    if(!range.followLatest){last=dates.length-1;while(last>0&&dates[last]>range.end)last--;}
+  }
+  first=Math.max(0,Math.min(first,Math.max(0,last-1)));last=Math.max(first+1,last);
+  return [first,Math.min(last,dates.length-1)];
+}
+function tgRangeKey_(canvas) {
+  var card=canvas.closest('.chart-card-clickable'),match=card&&String(card.getAttribute('onclick')||'').match(/openZoomChart\('([^']+)'\)/);
+  return match?match[1]:'';
+}
+function tgRangeCycleSource_(chart) {
+  if(!/^koreaCycle(Drawdown|Eps|Cli)$/.test(chart.canvas.id)||!window.TGKoreaCycle||!window.TGKoreaCycle.getRangeSource)return null;
+  var d=window.TGKoreaCycle.getRangeSource();if(!d)return null;
+  var id=chart.canvas.id, raw=id==='koreaCycleDrawdown'?[d.drawdown]:id==='koreaCycleEps'?[d.epsEstimated,d.epsObserved]:[d.cli,d.cli,d.cli,d.cli];
+  var datasets=chart.data.datasets.map(function(ds,i){var copy=Object.assign({},ds),rows=raw[i];
+    if(rows)copy.data=rows.map(function(r){return {x:Date.parse(tgRangeDate_(r[0])+'T00:00:00Z'),y:id==='koreaCycleCli'?r[i+1]:r[1],date:r[0]};});
+    else {var y=ds.data.length?ds.data[0].y:null;copy.data=[{x:Date.parse(d.meta.startDate+'T00:00:00Z'),y:y},{x:Date.parse(d.meta.maxDate+'T00:00:00Z'),y:y}];}
+    return copy;});
+  var dates=Array.from(new Set(raw.flatMap(function(rows){return rows.map(function(r){return tgRangeDate_(r[0]);});}))).filter(Boolean).sort();
+  return {mode:'points',dates:dates,datasets:datasets,context:id,title:chart.canvas.closest('.korea-cycle-panel').querySelector('h3,strong')?.textContent||id};
+}
+function tgRangeSource_(chart,state) {
+  var cycle=tgRangeCycleSource_(chart);if(cycle)return cycle;
+  if(/^export(Monthly|Quarterly|PriceVolume)Chart$/.test(chart.canvas.id)){
+    if(typeof exportDetailData==='undefined'||!exportDetailData)return null;
+    var quarterly=chart.canvas.id==='exportQuarterlyChart', rows=quarterly?exportDetailData.quarterly:exportDetailData.monthly;
+    var labels=(rows||[]).map(function(r){return r.label||r.month||r.quarter;});
+    return {mode:'export',dates:labels.map(tgRangeDate_),labels:labels,context:chart.canvas.id+':'+String(exportDetailData.item?.itemId||exportDetailData.item?.item||''),title:'수출 '+(quarterly?'분기':'월별')};
+  }
+  var key=tgRangeKey_(chart.canvas);if(!key)return null;
+  var config=getZoomChartConfig(key,true);if(!config||!config.labels||config.labels.length<2)return null;
+  var dates=config.labels.map(tgRangeDate_);if(dates.some(function(d){return !d;}))return null;
+  return {mode:'category',key:key,dates:dates,labels:config.labels,datasets:config.datasets,context:key+':'+config.title,title:config.title};
+}
+function tgRangePreserveVisibility_(chart,datasets) {
+  var hidden=new Map((chart.data.datasets||[]).map(function(ds,i){return [ds.label,!chart.isDatasetVisible(i)];}));
+  return datasets.map(function(ds){var copy=Object.assign({},ds);if(hidden.has(ds.label))copy.hidden=hidden.get(ds.label);return copy;});
+}
+function tgRangeApply_(chart,state,source) {
+  if(!state.range||source.mode==='export')return;
+  var bounds=tgRangeBounds_(source.dates,state.range);
+  if(source.mode==='points'){
+    chart.data.datasets=tgRangePreserveVisibility_(chart,source.datasets);
+    chart.options.scales.x.min=Date.parse(source.dates[bounds[0]]+'T00:00:00Z');
+    chart.options.scales.x.max=Date.parse(source.dates[bounds[1]]+'T00:00:00Z');
+  }else{
+    var selected=tgRangeSlice_(source,bounds[0],bounds[1]);
+    selected.datasets=tgRangePreserveVisibility_(chart,selected.datasets);chart.data.labels=selected.labels;chart.data.datasets=selected.datasets;
+  }
+}
+function tgRangeCurrentBounds_(chart,source) {
+  if(source.mode==='points'){
+    var a=new Date(chart.options.scales.x.min).toISOString().slice(0,10),b=new Date(chart.options.scales.x.max).toISOString().slice(0,10);
+    return tgRangeBounds_(source.dates,{start:a,end:b});
+  }
+  var labels=chart.data.labels||[], a=tgRangeDate_(labels[0]),b=tgRangeDate_(labels[labels.length-1]);
+  return tgRangeBounds_(source.dates,{start:a||source.dates[0],end:b||source.dates.at(-1)});
+}
+function tgRangeRenderOne_(state) {
+  var chart=state.chart;if(!chart||!chart.canvas?.isConnected)return;
+  if(state.source.mode==='export'){
+    if(chart.canvas.id==='exportMonthlyChart')renderExportMonthlyChart_(exportDetailData.monthly||[],exportDetailData.reportingMonth);
+    else if(chart.canvas.id==='exportQuarterlyChart')renderExportQuarterlyChart_(exportDetailData.quarterly||[]);
+    else renderExportPriceVolumeChart_(exportDetailData.monthly||[]);
+  }else{
+    if(!state.range){chart.data=tgRangeCloneData_(state.base);if(state.baseX){chart.options.scales.x.min=state.baseX.min;chart.options.scales.x.max=state.baseX.max;}}
+    chart.update('none');
+  }
+}
+function tgRangeSelect_(state,which,index) {
+  var dates=state.source.dates,bounds=state.range?tgRangeBounds_(dates,state.range):tgRangeCurrentBounds_(state.chart,state.source);
+  if(which==='start')bounds[0]=Math.max(0,Math.min(Number(index),bounds[1]-1));
+  else bounds[1]=Math.min(dates.length-1,Math.max(Number(index),bounds[0]+1));
+  state.range={start:dates[bounds[0]],end:dates[bounds[1]],followLatest:bounds[1]===dates.length-1};
+  tgRangeSyncControls_(state);
+  if(state.frame)return;
+  state.frame=requestAnimationFrame(function(){state.frame=0;tgRangeRenderOne_(state);});
+}
+function tgRangeSyncControls_(state) {
+  var ui=state.ui,source=state.source;if(!ui||!source)return;
+  var bounds=state.range?tgRangeBounds_(source.dates,state.range):tgRangeCurrentBounds_(state.chart,source);
+  [ui.start,ui.end].forEach(function(el){el.min=0;el.max=source.dates.length-1;el.disabled=source.dates.length<2;});
+  ui.start.value=bounds[0];ui.end.value=bounds[1];
+  ui.start.setAttribute('aria-valuetext',source.dates[bounds[0]]);ui.end.setAttribute('aria-valuetext',source.dates[bounds[1]]);
+  ui.start.title='시작일: '+source.dates[bounds[0]];ui.end.title='종료일: '+source.dates[bounds[1]];
+  ui.first.textContent=source.dates[bounds[0]];ui.last.textContent=source.dates[bounds[1]];
+  ui.fill.style.left=(bounds[0]/(source.dates.length-1)*100)+'%';ui.fill.style.width=((bounds[1]-bounds[0])/(source.dates.length-1)*100)+'%';
+  ui.start.style.zIndex=Number(ui.start.value)>source.dates.length/2?'3':'2';
+  ui.reset.disabled=!state.range;ui.root.classList.toggle('is-custom',!!state.range);
+}
+function tgRangeMount_(state) {
+  var chart=state.chart;if(!chart||!chart.canvas?.isConnected)return;
+  var card=chart.canvas.closest('.chart-card'),header=card?.querySelector('.chart-header > div');
+  if(state.source.mode==='export')header=chart.canvas.closest('.export-chart-card')?.querySelector('.export-chart-heading')||chart.canvas.parentElement?.previousElementSibling;
+  if(state.source.mode==='points')header=chart.canvas.closest('.korea-cycle-panel')?.querySelector('.korea-cycle-panel-header');
+  if(!header)return;
+  if(!state.ui||!state.ui.root.isConnected){
+    var root=document.createElement('div');root.className='tg-date-range-control';root.dataset.chartId=chart.canvas.id;
+    root.innerHTML='<div class="tg-date-range-track"><span class="tg-date-range-rail"></span><span class="tg-date-range-fill"></span><input type="range" step="1"><input type="range" step="1"></div><button type="button" class="tg-date-range-reset" title="탭 기간으로 초기화" aria-label="탭 기간으로 초기화">↺</button><div class="tg-date-range-dates"><span></span><span></span></div>';
+    var inputs=root.querySelectorAll('input'),dates=root.querySelector('.tg-date-range-dates');
+    state.ui={root:root,start:inputs[0],end:inputs[1],fill:root.querySelector('.tg-date-range-fill'),reset:root.querySelector('button'),first:dates.firstElementChild,last:dates.lastElementChild};
+    inputs[0].setAttribute('aria-label',state.source.title+' 시작일');inputs[1].setAttribute('aria-label',state.source.title+' 종료일');
+    inputs[0].addEventListener('input',function(){tgRangeSelect_(state,'start',this.value);});inputs[1].addEventListener('input',function(){tgRangeSelect_(state,'end',this.value);});
+    ['click','pointerdown','keydown'].forEach(function(event){root.addEventListener(event,function(e){e.stopPropagation();});});
+    state.ui.reset.addEventListener('click',function(){state.range=null;tgRangeRenderOne_(state);tgRangeSyncControls_(state);});
+    var badge=header.querySelector('.chart-update-date');if(badge)badge.insertAdjacentElement('afterend',root);else header.appendChild(root);
+  }
+  tgRangeSyncControls_(state);
+}
+function tgIndividualExportRows_(id,rows,limit) {
+  var state=tgIndividualRanges_.get(id);
+  var context=id+':'+String(typeof exportDetailData!=='undefined'&&(exportDetailData.item?.itemId||exportDetailData.item?.item)||'');
+  if(!state||state.context!==context||!state.range)return limit?rows.slice(-limit):rows;
+  var dates=rows.map(function(r){return tgRangeDate_(r.label||r.month||r.quarter);}),b=tgRangeBounds_(dates,state.range);
+  return rows.slice(b[0],b[1]+1);
+}
+function tgIndividualRangeActive_(id) {
+  var state=tgIndividualRanges_.get(id);if(!state||!state.range)return false;
+  if(state.source?.mode==='export')return state.context===id+':'+String(exportDetailData?.item?.itemId||exportDetailData?.item?.item||'');
+  return true;
+}
+function tgIndividualZoomConfig_(key,config) {
+  var state=Array.from(tgIndividualRanges_.values()).find(function(s){return s.source?.key===key&&s.range;});
+  if(!state)return config;
+  var b=tgRangeBounds_(config.labels.map(tgRangeDate_),state.range),selected=tgRangeSlice_(config,b[0],b[1]);
+  return Object.assign({},config,selected,{subtitle:state.range.start+' ~ '+state.range.end+' · 좌우 드래그 · 핀치 확대/축소'});
+}
+var tgIndividualRangePlugin_={id:'tgIndividualDateRange',beforeInit:function(chart){
+  if(chart.canvas.id==='zoomCanvas')return;
+  var source=tgRangeSource_(chart);if(!source||source.dates.length<2||source.dates.some(function(d){return !d;}))return;
+  var state=tgIndividualRanges_.get(chart.canvas.id);
+  if(!state){state={range:null,ui:null};tgIndividualRanges_.set(chart.canvas.id,state);}
+  if(state.context!==source.context){state.range=null;state.context=source.context;}
+  state.chart=chart;state.source=source;state.base=tgRangeCloneData_(chart.data);state.baseX={min:chart.options.scales?.x?.min,max:chart.options.scales?.x?.max};chart.$tgIndividualRange=state;
+},beforeUpdate:function(chart){
+  var state=chart.$tgIndividualRange;if(!state)return;
+  var source=tgRangeSource_(chart);if(!source)return;
+  if(state.context!==source.context){state.range=null;state.context=source.context;}
+  state.source=source;tgRangeApply_(chart,state,source);
+},afterUpdate:function(chart){
+  var state=chart.$tgIndividualRange;if(!state||state.mountQueued)return;
+  state.mountQueued=true;queueMicrotask(function(){state.mountQueued=false;tgRangeMount_(state);});
+},afterDestroy:function(chart){if(chart.$tgIndividualRange?.chart===chart)chart.$tgIndividualRange.chart=null;}};
+if(typeof Chart!=='undefined')Chart.register(tgIndividualRangePlugin_);
+function tgResetIndividualPage_(page) {
+  if(!page)return;
+  tgIndividualRanges_.forEach(function(state,id){if(state.chart&&(page.contains(state.chart.canvas)||(page.id==='page-korea'&&state.chart.canvas.closest('#koreaCycleCard')))){state.range=null;if(typeof chartRenderKeys_!=='undefined')delete chartRenderKeys_[id];}});
+}
+function tgResetIndividualSelector_(selector) {tgResetIndividualPage_(document.querySelector(selector)?.closest('.page'));}
+document.addEventListener('click',function(event){
+  var button=event.target.closest?.('button[data-range],button[data-cycle-range]');if(!button)return;
+  var page=button.closest('.page'), cycle=button.closest('#koreaCycleCard');if(!page&&!cycle)return;
+  if(page)tgResetIndividualPage_(page);
+  else tgIndividualRanges_.forEach(function(state,id){if(state.chart&&cycle?.contains(state.chart.canvas)){state.range=null;if(typeof chartRenderKeys_!=='undefined')delete chartRenderKeys_[id];}});
+},true);
+</script>
+
 </body>
 </html>
