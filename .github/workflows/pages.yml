@@ -6,7 +6,6 @@ on:
   workflow_dispatch:
 
 permissions:
-  actions: read
   contents: read
   pages: write
   id-token: write
@@ -16,10 +15,7 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+  package:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -27,20 +23,12 @@ jobs:
       - uses: actions/upload-pages-artifact@v4
         with:
           path: .
-      - name: Wait for the uploaded Pages artifact
-        env:
-          GH_TOKEN: ${{ github.token }}
-        shell: bash
-        run: |
-          for attempt in {1..8}; do
-            if id=$(gh api "repos/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID/artifacts?name=github-pages" \
-                --jq 'first(.artifacts[] | select(.expired == false) | .id) | . // empty') && [[ -n "$id" ]]; then
-              echo "Pages artifact $id is available"
-              exit 0
-            fi
-            sleep 5
-          done
-          echo "::error::Uploaded github-pages artifact did not become available"
-          exit 1
+  deploy:
+    needs: package
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
       - id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5
