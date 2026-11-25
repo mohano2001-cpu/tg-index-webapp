@@ -4664,6 +4664,7 @@
       }
 
       if (pageName === 'inflation') {
+        initUsCurveSp500Loader_();
         if (!fullInflationData.length && !fullExpectedInflationData.length) loadSentimentInflationData();
         else renderInflationCharts();
         loadFedWatchCurrentData();
@@ -9090,7 +9091,6 @@
 
     function renderInflationCharts() {
       renderUsCurveSp500Chart_(filterByRange(fullUsCurveSp500Data, inflationRange));
-      initUsCurveSp500Loader_();
       renderInflationChart(filterByRange(fullInflationData, inflationRange));
       renderExpectedInflationChart(filterByRange(fullExpectedInflationData, inflationRange));
       renderRateDecompositionChart(filterByRange(fullRateDecompositionData, inflationRange));
